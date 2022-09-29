@@ -1,0 +1,69 @@
+.wrapper{
+    background-image:url(../../../assets/img/neon.png.crdownload);
+    background-size:cover;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-google{
+    background-color: #dd4b39;
+    color: #fff;
+    width: 100%;
+    
+}
+
+.btn-facebook{
+    background-color:white;
+    color: #fff;
+    width: 100%;
+}
+.btn-Ingresar{
+    background-color:#c0c0c0;
+
+}
+.btn-Instragram{
+    background-image: url(../../../assets/img/Gmail_icon.png);
+}   
+
+.login{
+    color: #ffffff;
+    margin-left: 75px;
+}
+
+.btn-group{
+    left: 10px;
+}
+.cuenta{
+    color: #fff;
+}
+.contra{
+    color: white;
+}
+
+.logoGoogle{
+    height: 30px;
+    width: 40px;
+}
+
+.logoFacebook{
+    height: 45px;
+    width: 90px;
+
+}
+.logoGit{
+    height: 45px;
+    width: 90px;
+}
+
+.link{
+    color: rgb(67, 64, 224);
+}
+
+.link2{
+    color:rgb(67, 64, 224) ;
+}
+
+.logoGit{
+    height: 45px;
+    width: 60px;
+}

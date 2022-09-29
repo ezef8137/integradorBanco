@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+html,body{
+    height: 100%;
+}
+
+.wrapper{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.body{
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+    padding: 30px;
+}
+
+.form-floating{
+    text-align:start ;
+
+}
+
+.errorLabel{
+    margin-left: 5px;
+}
