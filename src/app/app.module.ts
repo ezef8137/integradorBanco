@@ -25,6 +25,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { ChatService } from './services/chat.service';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ChatService } from './services/chat.service';
     RegistrarUsuarioComponent,
     VerificarCorreoComponent,
     RecuperarPasswordComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PerfilComponent
   ],
   imports: [
     AngularFirestoreModule,
