@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: black;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarCenteredExample"
+        aria-controls="navbarCenteredExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div
+        class="collapse navbar-collapse justify-content-center"
+        id="navbarCenteredExample"
+      >
+        <!-- Left links -->
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/perfil-pantalla" href="#">Perfil</a>
+          </li>
+          <li class="nav-item" >
+            <a class="nav-link active" aria-current="page" routerLink="/trans-ferencias"  href="#">Transferencias</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/pres-pantalla" href="#">Prestamos</a>
+          </li>
+          <!-- Navbar dropdown -->
+          
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+
+<div class="estiloFondo">
+  <div class="container">
+    <div class="bodyEstilo">
+      <form (ngSubmit)="agregarMovimiento()" [formGroup]="movimientoUsuario">
+        <div class="form-floating  mb-3">
+          <input type="number"  formControlName="cuil" class="form-control" placeholder="destinatario">
+          <label >Ingrese su Cuil</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number"  formControlName="monto" class="form-control" placeholder="valor">
+          <label >Ingrese el monto</label>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary" >Aceptar</button>
+        </div>
+        
+      </form>
+        
+    </div>
+  
+  </div>
+    
+</div>

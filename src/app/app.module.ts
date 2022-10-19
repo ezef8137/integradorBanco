@@ -13,7 +13,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 //componentes
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component'; 
+import { PerfilComponent } from './components/perfil/perfil.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario.component';
 import { VerificarCorreoComponent } from './components/verificar-correo/verificar-correo.component';
@@ -24,20 +24,22 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { ChatService } from './services/chat.service';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { TransferenciasComponent } from './components/transferencias/transferencias.component';
+import { PrestamosComponent } from './components/prestamos/prestamos.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent,
+    PerfilComponent,
     AppComponent,
     LoginComponent,
     RegistrarUsuarioComponent,
     VerificarCorreoComponent,
     RecuperarPasswordComponent,
     SpinnerComponent,
-    PerfilComponent
+    PerfilComponent,
+    TransferenciasComponent,
+    PrestamosComponent
   ],
   imports: [
     AngularFirestoreModule,
@@ -51,7 +53,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     CommonModule,
   ],
   providers: [
-    ChatService
+    
   ],
   bootstrap: [AppComponent]
 })
