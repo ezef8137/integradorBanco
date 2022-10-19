@@ -16,6 +16,7 @@ export class PerfilComponent implements OnInit {
   movimientos: [];
   listaUsers: any= []
   objeUser:any
+  uid: any
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -24,11 +25,12 @@ export class PerfilComponent implements OnInit {
     private afs: AngularFirestore) {  }
 
   ngOnInit(): void {
-    this.getMovimientos()
     this.afAuth.currentUser.then(user => {
       if(user) {
         this.dataUser = user;
+        this.uid = this.dataUser.uid
         this.guardarUser(this.dataUser)
+        this.getMovimientos()
       }else {
         this.router.navigate(['/login']);
       }
@@ -36,11 +38,11 @@ export class PerfilComponent implements OnInit {
   }
 
   getMovimientos(){
-    this.afs.collection('i0UE4zqwFZhVUzuI4Kgt75jylAt1').snapshotChanges().subscribe(data => {
+    this.afs.collection((this.uid).toString()).snapshotChanges().subscribe(data => {
       this.cualqui = [];
-      console.log(this.cualqui)
+      // console.log(this.cualqui)
       data.forEach((element: any) => {
-        console.log(element)
+        // console.log(element)
         this.cualqui.push({
           uid: element.payload.doc.uid,
           ...element.payload.doc.data()
@@ -53,7 +55,6 @@ export class PerfilComponent implements OnInit {
   guardarUser(dataUser: any) {
     const objeUser = {
       email: dataUser.email,
-      movimientos:{}
     }
 
     const saveUser = (objeUser: any) => {

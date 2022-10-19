@@ -24,36 +24,46 @@
 
         <li class="nav-item">
           <a class="nav-link" routerLink="/pres-pantalla" href="#">Prestamos</a>
-        </li>          
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" href="#">LogOut</a>
+        </li>
+
       </ul>
     </div>
   </div>
 </nav>
-<div class="container mt-4">
-  <div class="card">
-      <div class="card-body">
-          <span class="h3">Listado de Libros</span>
-          <h5 style="margin-top: 30px;" *ngIf="cualqui.length == 0">No hay datos para mostrar</h5>
-          <table *ngIf="cualqui.length > 0" class="table table-striped mt-5">
-              <thead>
-                <tr>
-                  <th>Cuil</th>
-                  <th>Monto</th>
-                  <th>Fecha</th>
-                  <th>Horario</th>
 
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let cualquis of cualqui">
-                  <td>{{ cualquis.cuil }}</td>
-                  <td>{{ cualquis.monto }}</td>
-                  <td>{{ cualquis.fecha }}</td>
-                  <td>{{ cualquis.horario }}</td>
-                </tr>
-              </tbody>
-            </table>
+<div class="wrapper">
+  <div class="body">
+    <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
+      <div class="card-body text-center">
+        <span class="h3">Movimientos</span>
+            <h5 style="margin-top: 30px;" *ngIf="cualqui.length == 0">No hay datos para mostrar</h5>
+            <table *ngIf="cualqui.length > 0" class="table table-striped mt-3">
+                <thead>
+                  <tr>
+                    <th>Cuil</th>
+                    <th>Monto</th>
+                    <th>Motivo</th>
+                    <th>Fecha</th>
+                    <th>Horario</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cualquis of cualqui">
+                    <td>{{ cualquis.cuil }}</td>
+                    <td>{{ cualquis.monto }}</td>
+                    <td>{{ cualquis.motivo }}</td>
+                    <td>{{ cualquis.fecha }}</td>
+                    <td>{{ cualquis.horario }}</td>
+                  </tr>
+                </tbody>
+              </table>
       </div>
+    </div>
+
   </div>
 </div>
+

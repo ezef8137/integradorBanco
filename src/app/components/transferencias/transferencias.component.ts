@@ -14,7 +14,7 @@ import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 export class TransferenciasComponent implements OnInit {
   dataUser: any;
   movimientoUsuario: FormGroup;
-  objFirebase: FormGroup;  
+  objFirebase: FormGroup;
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -25,8 +25,9 @@ export class TransferenciasComponent implements OnInit {
 
   ) {
     this.movimientoUsuario=this.fb.group({
-      cuil: ["",Validators.required],
-      monto:["",Validators.required]
+      cuil: ["",Validators.required, Validators.minLength(11), Validators.maxLength(11)],
+      monto:["",Validators.required],
+      motivo:["", Validators.required]
     })
     }
 
@@ -34,7 +35,7 @@ export class TransferenciasComponent implements OnInit {
     this.afAuth.currentUser.then(user => {
       if(user) {
         this.dataUser = user;
-        
+
       }else {
         this.router.navigate(['/login']);
       }
@@ -43,6 +44,7 @@ export class TransferenciasComponent implements OnInit {
   agregarMovimiento(){
     const cuil = this.movimientoUsuario.value.cuil;
     const monto = this.movimientoUsuario.value.monto;
+    const motivo = this.movimientoUsuario.value.motivo;
 
     var meses = [
       "Enero", "Febrero", "Marzo",
@@ -59,11 +61,13 @@ export class TransferenciasComponent implements OnInit {
     var fecha_formateada = dia + ' de ' + meses[mes] + ' de ' + yyy;
     const usuario = {
       horario: hora + ':' + minutos,
-      fecha: fecha_formateada, 
+      fecha: fecha_formateada,
       cuil: cuil,
-      monto: monto
+      monto: monto,
+      motivo: motivo
     }
       this.afs.collection(this.dataUser.uid).add(usuario);
+      this.router.navigate(["/perfil-pantalla"]);
   }
 }
 

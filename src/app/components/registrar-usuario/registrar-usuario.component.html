@@ -1,27 +1,43 @@
 <div class="wrapper">
-    <div *ngIf="!loading" class="body">
-        <h1 class="Registrarse">Registrarse</h1>
+  <div class="body">
+    <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
+      <div class="card-body text-center">
+        <div class="logoInicioBank">
+          <img src="https://cdn-icons-png.flaticon.com/512/8176/8176383.png"
+          class="img-fluid" alt="Sample image">
+        </div>
+        <div class="mb-3">
+          <h4>Registrar Usuario</h4>
+        </div>
         <form (ngSubmit)="registrar()" [formGroup]="registrarUsuario">
-              <div class="form-floating mb-3">
-              <input type="email" class="form-control" formControlName="email" placeholder="name@example.com">
-              <label >Email </label>
-                
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" formControlName="email" placeholder="name@example.com">
+            <label >Email </label>
           </div>
+
           <div class="form-floating mb-3">
             <input type="password" class="form-control"formControlName="password" placeholder="Password">
             <label >Password</label>
           </div>
+
           <div class="form-floating mb-3">
             <input type="password" class="form-control" formControlName="RepetirPassword" placeholder="Repetir contraseña">
             <label >Repita de nuevo la contraseña</label>
           </div>
+
           <div class="d-grid gap-2 mb-3">
             <button class="btn btn-primary" type="submit">Aceptar</button>
           </div>
-          
+
           <a routerLink="/login">Volver</a>
         </form>
+      </div>
     </div>
-    <app-spinner *ngIf="loading"></app-spinner>
+
+  </div>
+  <app-spinner *ngIf="loading"></app-spinner>
 
 </div>
+
+
+

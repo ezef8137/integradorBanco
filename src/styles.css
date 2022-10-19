@@ -3,6 +3,21 @@ html,body{
     height: 100%;
 }
 
+.estiloFondo{
+  width: 100%;
+  height: 100%;
+  background: #4B79A1;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bodyEstilo{
+  width: 30%;
+  height: 30%;
+  margin: auto;
+  padding: 60px;
+}
+
 .wrapper{
     display: flex;
     height: 100%;
@@ -11,10 +26,11 @@ html,body{
 }
 .body{
     width: 100%;
+    height: 100%;
     max-width: 330px;
     margin: auto;
     padding: 30px;
-    
+
 }
 
 .form-floating{
