@@ -8,32 +8,16 @@
     color: #ffffff;
     margin-left: 75px;
     margin-bottom: 40px;
-
 }
 
 .btn-group{
     left: 10px;
 }
 .cuenta{
-    color: #fff;
+    color: rgb(0, 0, 0);
 }
 .contra{
-    color: white;
-}
-
-.logoGoogle{
-    height: 30px;
-    width: 40px;
-}
-
-.logoFacebook{
-    height: 45px;
-    width: 90px;
-
-}
-.logoGit{
-    height: 45px;
-    width: 90px;
+    color: rgb(0, 0, 0);
 }
 
 .link{
@@ -44,10 +28,6 @@
     color:rgb(67, 64, 224) ;
 }
 
-.logoGit{
-    height: 45px;
-    width: 60px;
-}
 .logoInicioBank{
     margin: auto;
     margin-bottom: 30px;
@@ -60,7 +40,7 @@
     transition: all 0.3s ease-in-out;
     background-color: rgba(255, 255, 255, 0.349);
     box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
-
 }
+
 
 

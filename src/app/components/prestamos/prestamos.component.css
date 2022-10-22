@@ -1,5 +1,39 @@
-.wrapper{
-    background: #4B79A1;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.bodyPrestamo {
+  height: 100%;
+  width: 100%;
+  background: #4B79A1;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.titulo {
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'Potta One', cursive;
+}
+
+.green-icon {
+  color: #198754;
+}
+
+.red-icon {
+  color: #dc3545;
+}
+
+.spinner-border {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.far {
+  cursor: pointer;
+  margin-right: 7px;
+}
+
+.logoPrestamo{
+  margin: auto;
+  margin-bottom: 30px;
+  height: 180px;
+  width: 180px;
+
 }

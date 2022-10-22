@@ -36,15 +36,36 @@
 </nav>
 
 <div class="wrapper">
+  <div class="card shadow-2-strong text-black" style="border-radius: 1rem; margin-left: 60px">
+    <div class="card-body text-center">
+      <div class="logoInicioBank">
+        <img src="https://cdn-icons-png.flaticon.com/512/8176/8176383.png"
+        class="img-fluid" alt="Sample image">
+      </div>
+
+      <div class="text-center mb-4">
+        <h1 class="display-4">Bienvenido</h1>
+        <p>{{ this.dataUser.email }}</p>
+      </div>
+    </div>
+  </div>
+
   <div class="body">
+    <div class="cardSesi">
+      <div class="card-body text-center">
+        <h4 class="card-title">Saldo disponible</h4>
+        <h4 class="display-6">${{ this.saldoDis}}</h4>
+      </div>
+    </div>
+
     <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
       <div class="card-body text-center">
-        <span class="h3">Movimientos</span>
+        <span class="h3">Ultimos Movimientos</span>
             <h5 style="margin-top: 30px;" *ngIf="cualqui.length == 0">No hay datos para mostrar</h5>
             <table *ngIf="cualqui.length > 0" class="table table-striped mt-3">
                 <thead>
                   <tr>
-                    <th>Cuil</th>
+                    <th>Cbu</th>
                     <th>Monto</th>
                     <th>Motivo</th>
                     <th>Fecha</th>
@@ -53,7 +74,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let cualquis of cualqui">
-                    <td>{{ cualquis.cuil }}</td>
+                    <td>{{ cualquis.cbu }}</td>
                     <td>{{ cualquis.monto }}</td>
                     <td>{{ cualquis.motivo }}</td>
                     <td>{{ cualquis.fecha }}</td>

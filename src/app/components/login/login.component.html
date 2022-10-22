@@ -10,10 +10,19 @@
             <div class="form-floating  mb-3">
               <input type="email"  formControlName="email" class="form-control" placeholder="name@example.com">
               <label >Email address</label>
+              <span *ngIf="loginUsuario.get('email')?.hasError('required') &&  loginUsuario.get('email')?.touched" class="text-danger" >
+                (El <strong>correo</strong> es requerido)
+              </span>
+              <span *ngIf="loginUsuario.get('email')?.hasError('email') &&  loginUsuario.get('email')?.touched" class="text-danger" >
+                (El <strong>correo</strong> es invalido)
+              </span>
             </div>
             <div class="form-floating mb-3">
               <input type="password"  formControlName="password" class="form-control" placeholder="Password">
               <label >Password</label>
+              <span *ngIf="loginUsuario.get('password')?.hasError('required') &&  loginUsuario.get('password')?.touched" class="text-danger" >
+                (La <strong>password</strong> es requerida)
+              </span>
             </div>
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-primary" >Ingresar</button>

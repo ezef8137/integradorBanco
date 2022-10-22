@@ -40,12 +40,18 @@
         </div>
         <form (ngSubmit)="agregarMovimiento()" [formGroup]="movimientoUsuario">
           <div class="form-floating  mb-3">
-            <input type="number"  formControlName="cuil" class="form-control" placeholder="destinatario">
-            <label >Ingrese el cuil</label>
+            <input type="text"  formControlName="cbu" class="form-control" placeholder="destinatario">
+            <label >Ingrese el cbu</label>
+            <span *ngIf="movimientoUsuario.get('cbu')?.hasError('required') &&  movimientoUsuario.get('cbu')?.touched" class="text-danger" >
+              (El <strong>cbu</strong> es requerido)
+            </span>
           </div>
           <div class="form-floating mb-3">
             <input type="number"  formControlName="monto" class="form-control" placeholder="valor">
             <label >Ingrese el monto</label>
+            <span *ngIf="movimientoUsuario.get('monto')?.hasError('required') &&  movimientoUsuario.get('monto')?.touched" class="text-danger" >
+              (El <strong>monto</strong> es requerido)
+            </span>
           </div>
 
           <div class="form-floating mb-3">

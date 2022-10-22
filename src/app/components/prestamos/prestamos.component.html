@@ -1,7 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: black;">
-    <!-- Container wrapper -->
+<div class="bodyPrestamo">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: black;">
     <div class="container-fluid">
-      <!-- Toggle button -->
       <button
         class="navbar-toggler"
         type="button"
@@ -9,17 +8,13 @@
         data-mdb-target="#navbarCenteredExample"
         aria-controls="navbarCenteredExample"
         aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+        aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
 
-      <!-- Collapsible wrapper -->
       <div
         class="collapse navbar-collapse justify-content-center"
-        id="navbarCenteredExample"
-      >
-        <!-- Left links -->
+        id="navbarCenteredExample">
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" routerLink="/perfil-pantalla" href="#">Perfil</a>
@@ -37,13 +32,77 @@
           </li>
 
         </ul>
-        <!-- Left links -->
       </div>
-      <!-- Collapsible wrapper -->
     </div>
-    <!-- Container wrapper -->
   </nav>
-
-<div class="wrapper">
-
+  <div class="container mt-5">
+      <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+              <div class="card">
+                  <div class="card-body">
+                      <h1 class="titulo">PRESTAMOS</h1>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row mt-4">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="titulo mb-3">RELLENAR FORMULARIO</h5>
+                <form [formGroup]="prestamoUsuario" (ngSubmit)="prestamo()">
+                  <div class="input-group input-group-lg mb-3">
+                      <span class="input-group-text">
+                          <i class="fas fa-user-circle" [class.green-icon]="this.prestamoUsuario.get('cuil')?.valid"
+                              [class.red-icon]="this.prestamoUsuario.get('cuil')?.invalid && this.prestamoUsuario.get('cuil')?.touched"></i>
+                      </span>
+                      <input type="text" formControlName="cuil" class="form-control" placeholder="Cuil">
+                  </div>
+                  <div class="input-group input-group-lg mb-3">
+                      <span class="input-group-text">
+                        <i class="fa-solid fa-money-bill" [class.green-icon]="this.prestamoUsuario.get('monto')?.valid"
+                              [class.red-icon]="this.prestamoUsuario.get('monto')?.invalid && this.prestamoUsuario.get('monto')?.touched"></i>
+                      </span>
+                      <input type="text" formControlName="monto" class="form-control" placeholder="Monto">
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-7">
+                          <div class="input-group input-group-lg mb-3">
+                              <span class="input-group-text">
+                                  <i class="fas fa-calendar-alt" [class.green-icon]="this.prestamoUsuario.get('fechaExpiracion')?.valid"
+                                      [class.red-icon]="this.prestamoUsuario.get('fechaExpiracion')?.invalid && this.prestamoUsuario.get('fechaExpiracion')?.touched"></i>
+                              </span>
+                              <input type="text" formControlName="fechaExpiracion" maxlength="5" class="form-control"
+                                  placeholder="MM/YY">
+                          </div>
+                      </div>
+                      <div class="col-lg-5">
+                          <div class="input-group input-group-lg mb-3">
+                              <span class="input-group-text">
+                                  <i class="fas fa-key" [class.green-icon]="this.prestamoUsuario.get('cvv')?.valid"
+                                      [class.red-icon]="this.prestamoUsuario.get('cvv')?.invalid && this.prestamoUsuario.get('cvv')?.touched"></i>
+                              </span>
+                              <input type="password" formControlName="cvv" maxlength="3" class="form-control"
+                                  placeholder="CVV">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="d-grid gap-2">
+                      <button [disabled]="prestamoUsuario.invalid" class="btn btn-success btn-lg" type="submit">
+                          <i class="fas fa-database"></i> &nbsp;Aceptar
+                      </button>
+                  </div>
+              </form>
+              </div>
+          </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="titulo mb-3">PRESTAMOS SOLICITADOS</h5>
+              </div>
+          </div>
+          </div>
+      </div>
+  </div>
 </div>

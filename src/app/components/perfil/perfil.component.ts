@@ -17,6 +17,7 @@ export class PerfilComponent implements OnInit {
   listaUsers: any= []
   objeUser:any
   uid: any
+  saldoDis: any
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -38,11 +39,9 @@ export class PerfilComponent implements OnInit {
   }
 
   getMovimientos(){
-    this.afs.collection((this.uid).toString()).snapshotChanges().subscribe(data => {
+    this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(5)).snapshotChanges().subscribe(data => {
       this.cualqui = [];
-      // console.log(this.cualqui)
       data.forEach((element: any) => {
-        // console.log(element)
         this.cualqui.push({
           uid: element.payload.doc.uid,
           ...element.payload.doc.data()
@@ -55,16 +54,16 @@ export class PerfilComponent implements OnInit {
   guardarUser(dataUser: any) {
     const objeUser = {
       email: dataUser.email,
+      dinero: 500
     }
 
     const saveUser = (objeUser: any) => {
 
       this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser).
       then(docRef =>{
-          console.log('agrego');
+          this.saldoDis = String(objeUser.dinero)
       })
       .catch(error => {
-        console.log(error);
       }
       );
       return objeUser;
