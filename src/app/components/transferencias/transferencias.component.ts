@@ -71,7 +71,7 @@ export class TransferenciasComponent implements OnInit {
         horario: hora + ':' + minutos,
         fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
         cbu: this.movimientoUsuario.value.cbu,
-        monto: "$" +(this.movimientoUsuario.value.monto),
+        monto: "-" + "$" +(this.movimientoUsuario.value.monto),
         motivo: this.movimientoUsuario.value.motivo
       }
 

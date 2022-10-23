@@ -65,27 +65,18 @@
                       </span>
                       <input type="text" formControlName="monto" class="form-control" placeholder="Monto">
                   </div>
-                  <div class="row">
-                      <div class="col-lg-7">
-                          <div class="input-group input-group-lg mb-3">
-                              <span class="input-group-text">
-                                  <i class="fas fa-calendar-alt" [class.green-icon]="this.prestamoUsuario.get('fechaExpiracion')?.valid"
-                                      [class.red-icon]="this.prestamoUsuario.get('fechaExpiracion')?.invalid && this.prestamoUsuario.get('fechaExpiracion')?.touched"></i>
-                              </span>
-                              <input type="text" formControlName="fechaExpiracion" maxlength="5" class="form-control"
-                                  placeholder="MM/YY">
-                          </div>
-                      </div>
-                      <div class="col-lg-5">
-                          <div class="input-group input-group-lg mb-3">
-                              <span class="input-group-text">
-                                  <i class="fas fa-key" [class.green-icon]="this.prestamoUsuario.get('cvv')?.valid"
-                                      [class.red-icon]="this.prestamoUsuario.get('cvv')?.invalid && this.prestamoUsuario.get('cvv')?.touched"></i>
-                              </span>
-                              <input type="password" formControlName="cvv" maxlength="3" class="form-control"
-                                  placeholder="CVV">
-                          </div>
-                      </div>
+                  <div class="input-group input-group-lg mb-3">
+                    <span class="input-group-text">
+                      <i class="fa-sharp fa-solid fa-money-check-dollar" [class.green-icon]="this.prestamoUsuario.get('cuotas')?.valid"
+                            [class.red-icon]="this.prestamoUsuario.get('cuotas')?.invalid && this.prestamoUsuario.get('cuotas')?.touched"></i>
+                    </span>
+                      <select name="motivo" class="form-control" aria-label="Default select example">
+                        <option value="cuotas" disabled>Cuotas</option>
+                        <option value="6">6</option>
+                        <option value="12">12</option>
+                        <option value="18">18</option>
+                        <option value="24">24</option>
+                      </select>
                   </div>
                   <div class="d-grid gap-2">
                       <button [disabled]="prestamoUsuario.invalid" class="btn btn-success btn-lg" type="submit">
@@ -106,3 +97,4 @@
       </div>
   </div>
 </div>
+

@@ -41,3 +41,10 @@ html,body{
 .errorLabel{
     margin-left: 5px;
 }
+
+.toast-success {
+  background-color: #4B79A1 !important;
+  border-radius: 22px !important;
+  box-shadow: -5px 8px 16px 0px rgba(0,0,0,0.3) !important;
+  margin-bottom: 2px !important;
+}

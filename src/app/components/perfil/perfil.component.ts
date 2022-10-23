@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { users } from 'src/app/models/users';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-perfil',
@@ -18,10 +20,13 @@ export class PerfilComponent implements OnInit {
   objeUser:any
   uid: any
   saldoDis: any
+  cbu: any
+  mensaje: any
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
+    private toastr: ToastrService,
     public _datosFirestore: DatosFirebaseService,
     private afs: AngularFirestore) {  }
 
@@ -39,7 +44,7 @@ export class PerfilComponent implements OnInit {
   }
 
   getMovimientos(){
-    this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(5)).snapshotChanges().subscribe(data => {
+    this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(6)).snapshotChanges().subscribe(data => {
       this.cualqui = [];
       data.forEach((element: any) => {
         this.cualqui.push({
@@ -54,7 +59,8 @@ export class PerfilComponent implements OnInit {
   guardarUser(dataUser: any) {
     const objeUser = {
       email: dataUser.email,
-      dinero: 500
+      dinero: 500,
+      cbu: dataUser.uid
     }
 
     const saveUser = (objeUser: any) => {
@@ -62,6 +68,7 @@ export class PerfilComponent implements OnInit {
       this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser).
       then(docRef =>{
           this.saldoDis = String(objeUser.dinero)
+          this.cbu = String(objeUser.cbu)
       })
       .catch(error => {
       }
@@ -69,5 +76,20 @@ export class PerfilComponent implements OnInit {
       return objeUser;
     }
     saveUser(objeUser);
+  }
+
+  copyMessage(){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.cbu;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    this.toastr.success("El CVU se ha copiado al portapapeles","");
+    document.execCommand('copy')
+    document.body.removeChild(selBox);
   }
 }

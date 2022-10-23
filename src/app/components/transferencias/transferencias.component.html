@@ -40,7 +40,7 @@
         </div>
         <form (ngSubmit)="agregarMovimiento()" [formGroup]="movimientoUsuario">
           <div class="form-floating  mb-3">
-            <input type="text"  formControlName="cbu" class="form-control" placeholder="destinatario">
+            <input type="text"  formControlName="cbu" maxlength="28" class="form-control" placeholder="destinatario">
             <label >Ingrese el cbu</label>
             <span *ngIf="movimientoUsuario.get('cbu')?.hasError('required') &&  movimientoUsuario.get('cbu')?.touched" class="text-danger" >
               (El <strong>cbu</strong> es requerido)
