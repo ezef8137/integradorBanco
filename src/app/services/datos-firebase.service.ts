@@ -17,7 +17,7 @@ export class DatosFirebaseService {
     return this.firestore.collection('usuarios', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
   }
 
-  
+
 
   deleteUsuario(id: string): Promise<any> {
     return this.firestore.collection('usuarios').doc(id).delete();
@@ -25,6 +25,10 @@ export class DatosFirebaseService {
 
   getUsuario(id: string): Observable<any> {
     return this.firestore.collection('usuarios').doc(id).snapshotChanges();
+  }
+
+  getUsuarioAll(): Observable<any> {
+    return this.firestore.collection('usuarios').snapshotChanges();
   }
 
   updateUsuario(id: string, data:any): Promise<any> {

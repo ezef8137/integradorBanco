@@ -22,14 +22,14 @@
 
 .card{
   transition: all 0.3s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.349);
+  background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
 }
 
 
 .cardSesi{
   transition: all 0.3s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.349);
+  background-color: rgba(255, 255, 255, 0.911);
   border-radius: 1rem;
   text-decoration: black;
   box-shadow: 10px 30px 15px  rgba(9, 41, 50, 0.614);
@@ -42,7 +42,7 @@
 }
 .cardCbu{
   transition: all 0.3s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.349);
+  background-color: rgba(255, 255, 255, 0.911);
   border-radius: 1rem;
   text-decoration: black;
   box-shadow: 10px 30px 15px  rgba(9, 41, 50, 0.614);
@@ -56,7 +56,7 @@
 
 .cardBienvenido{
   transition: all 0.3s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.349);
+  background-color: rgba(255, 255, 255, 0.911);
   border-radius: 1rem;
   text-decoration: black;
   box-shadow: 10px 30px 15px  rgba(9, 41, 50, 0.614);
@@ -74,24 +74,29 @@
 
 .card-pa{
   transition: all 0.3s ease-in-out;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
   border-radius: 1rem;
 }
 
 .cardSesi{
-  background-color: white;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.911);
+  box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
+  border-radius: 1rem;
 }
 
 .card-bievenida{
-  background-color: white;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.911);
+  box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
   border-radius: 1rem;
   padding: 15px;
 }
 
 .card-SaldoCbus{
   transition: all 0.3s ease-in-out;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
   border-radius: 1rem;
   width: 300px;

@@ -1,82 +1,90 @@
-<div class="bodyPrestamo">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: black;">
-    <div class="container-fluid">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarCenteredExample"
-        aria-controls="navbarCenteredExample"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: black;">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarCenteredExample"
+      aria-controls="navbarCenteredExample"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
 
-      <div
-        class="collapse navbar-collapse justify-content-center"
-        id="navbarCenteredExample">
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/perfil-pantalla" href="#">Perfil</a>
-          </li>
-          <li class="nav-item" >
-            <a class="nav-link" routerLink="/trans-ferencias"  href="#">Transferencias</a>
-          </li>
+    <div
+      class="collapse navbar-collapse justify-content-center"
+      id="navbarCenteredExample">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/perfil-pantalla" href="#">Perfil</a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" routerLink="/trans-ferencias"  href="#">Transferencias</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/pres-pantalla" href="#">Prestamos</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/pres-pantalla" href="#">Prestamos</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login" href="#">LogOut</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" href="#">LogOut</a>
+        </li>
 
-        </ul>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="wrapper">
+  <div class="body">
+    <div class="imgT">
+      <img src="https://cdn-icons-png.flaticon.com/512/6477/6477536.png" alt="">
+    </div>
+    <div class="card shadow-2-strong text-black" style="border-radius: 1rem; margin-left: auto">
+      <div class="card-body text-center">
+        <div class="mb-3">
+          <h4 class="transferencia">Solicitar Préstamo</h4>
+        </div>
+        <form [formGroup]="prestamoUsuario" (ngSubmit)="prestamo()">
+          <div class="input-group input-group-lg mb-3">
+              <span class="input-group-text">
+                  <i class="fas fa-user-circle" [class.green-icon]="this.prestamoUsuario.get('cuil')?.valid"
+                      [class.red-icon]="this.prestamoUsuario.get('cuil')?.invalid && this.prestamoUsuario.get('cuil')?.touched"></i>
+              </span>
+              <input type="text" formControlName="cuil" class="form-control" placeholder="Cuil">
+          </div>
+          <div class="input-group input-group-lg mb-3">
+              <span class="input-group-text">
+                <i class="fa-solid fa-money-bill" [class.green-icon]="this.prestamoUsuario.get('monto')?.valid"
+                      [class.red-icon]="this.prestamoUsuario.get('monto')?.invalid && this.prestamoUsuario.get('monto')?.touched"></i>
+              </span>
+              <input type="text" formControlName="monto" class="form-control" placeholder="Monto">
+          </div>
+          <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+              <i class="fa-sharp fa-solid fa-money-check-dollar" [class.green-icon]="this.prestamoUsuario.get('cuotas')?.valid"
+                    [class.red-icon]="this.prestamoUsuario.get('cuotas')?.invalid && this.prestamoUsuario.get('cuotas')?.touched"></i>
+            </span>
+              <select name="motivo" class="form-control" aria-label="Default select example">
+                <option value="cuotas" disabled>Cuotas</option>
+                <option value="6">6</option>
+                <option value="12">12</option>
+                <option value="18">18</option>
+                <option value="24">24</option>
+              </select>
+          </div>
+          <div class="d-grid gap-2 text-center" style="justify-content: center;">
+            <button class="learn-more" [disabled]="prestamoUsuario.invalid" type="submit">
+              <span class="circle" aria-hidden="true">
+              <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">Aceptar</span>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  </nav>
-  <div class="container mt-5">
-          <div class="formu">
-            <div class="prestamo card mt-5">
-              <div class="card-body">
-                <h5 class="titulo mb-3">Rellenar Formulario</h5>
-                <form [formGroup]="prestamoUsuario" (ngSubmit)="prestamo()">
-                  <div class="input-group input-group-lg mb-3">
-                      <span class="input-group-text">
-                          <i class="fas fa-user-circle" [class.green-icon]="this.prestamoUsuario.get('cuil')?.valid"
-                              [class.red-icon]="this.prestamoUsuario.get('cuil')?.invalid && this.prestamoUsuario.get('cuil')?.touched"></i>
-                      </span>
-                      <input type="text" formControlName="cuil" class="form-control" placeholder="Cuil">
-                  </div>
-                  <div class="input-group input-group-lg mb-3">
-                      <span class="input-group-text">
-                        <i class="fa-solid fa-money-bill" [class.green-icon]="this.prestamoUsuario.get('monto')?.valid"
-                              [class.red-icon]="this.prestamoUsuario.get('monto')?.invalid && this.prestamoUsuario.get('monto')?.touched"></i>
-                      </span>
-                      <input type="text" formControlName="monto" class="form-control" placeholder="Monto">
-                  </div>
-                  <div class="input-group input-group-lg mb-3">
-                    <span class="input-group-text">
-                      <i class="fa-sharp fa-solid fa-money-check-dollar" [class.green-icon]="this.prestamoUsuario.get('cuotas')?.valid"
-                            [class.red-icon]="this.prestamoUsuario.get('cuotas')?.invalid && this.prestamoUsuario.get('cuotas')?.touched"></i>
-                    </span>
-                      <select name="motivo" class="form-control" aria-label="Default select example">
-                        <option value="cuotas" disabled>Cuotas</option>
-                        <option value="6">6</option>
-                        <option value="12">12</option>
-                        <option value="18">18</option>
-                        <option value="24">24</option>
-                      </select>
-                  </div>
-                  <div class="d-grid gap-2">
-                      <button [disabled]="prestamoUsuario.invalid" class="btn btn-success btn-lg" type="submit">
-                          <i class="fas fa-database"></i> &nbsp;Aceptar
-                      </button>
-                  </div>
-              </form>
-              </div>
-          </div>
-          </div>
+
   </div>
 </div>
 

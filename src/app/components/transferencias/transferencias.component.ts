@@ -18,6 +18,10 @@ export class TransferenciasComponent implements OnInit {
   objFirebase: FormGroup;
   datosUsuario: any[] = []
   saldoDis: any
+  entradaDatosOrigen: any[] = []
+  entradaDatosDestino: any[] = []
+  cuentaEnviarDinero: {}
+
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -29,7 +33,7 @@ export class TransferenciasComponent implements OnInit {
 
   ) {
     this.movimientoUsuario = this.fb.group({
-      cbu: ["",Validators.required],
+      cbu: ["", [Validators.required, Validators.minLength(28), Validators.maxLength(28)]],
       monto:["",Validators.required],
       motivo:["", Validators.required]
     })
@@ -45,6 +49,12 @@ export class TransferenciasComponent implements OnInit {
     })}
 
   agregarMovimiento(){
+
+    if (this.movimientoUsuario.value.cbu == this.dataUser.uid){
+      this.toastr.error("No se puede enviar dinero usted mismo","Error")
+      return;
+    }
+
     if (this.movimientoUsuario.value.cbu == null || this.movimientoUsuario.value.monto == null){
       this.toastr.error("Ha ingresado un campo incorrecto","Error")
       return;
@@ -55,7 +65,7 @@ export class TransferenciasComponent implements OnInit {
       return;
     }
 
-    if (String(this.movimientoUsuario.value.cbu).length == 22 && (this.movimientoUsuario.value.monto) > 0){
+    if (String(this.movimientoUsuario.value.cbu).length == 28 && (this.movimientoUsuario.value.monto) > 0){
       var meses = [
         "Enero", "Febrero", "Marzo",
         "Abril", "Mayo", "Junio", "Julio",
@@ -67,7 +77,7 @@ export class TransferenciasComponent implements OnInit {
       var dia = date.getDate();
       var mes = date.getMonth();
       var yyy = date.getFullYear();
-      const usuario = {
+      const movimientoOrigen = {
         horario: hora + ':' + minutos,
         fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
         cbu: this.movimientoUsuario.value.cbu,
@@ -75,34 +85,73 @@ export class TransferenciasComponent implements OnInit {
         motivo: this.movimientoUsuario.value.motivo
       }
 
-      this.afs.collection("usuarios").snapshotChanges().subscribe(data => {
-        this.datosUsuario = [];
-        data.forEach((element: any) => {
-          this.datosUsuario.push({
-            uid: element.payload.doc.uid,
-            ...element.payload.doc.data()
-          })
-        })
-        console.log(this.datosUsuario)
-      });
-
-      const actualizarUsuario = {
-        email : this.dataUser.email,
-        dinero : parseInt(this.dataUser.dinero) - parseInt(this.movimientoUsuario.value.monto)
+      const movimientoDestino = {
+        horario: hora + ':' + minutos,
+        fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
+        cbu: this.movimientoUsuario.value.cbu,
+        monto: "+" + "$" +(this.movimientoUsuario.value.monto),
+        motivo: "Transferencia"
       }
-      this.afs.collection(this.dataUser.uid).add(usuario);
-      this.afs.collection("usuarios").doc(this.dataUser.uid).update(actualizarUsuario)
-      this.router.navigate(["/perfil-pantalla"]);
+
+      this._datosService.getUsuarioAll().subscribe(entrada => {
+        entrada.forEach((element: any) => {
+          if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
+            this.entradaDatosOrigen.push({
+              cbu: element.payload.doc.data()["cbu"],
+              dinero: element.payload.doc.data()["dinero"],
+              email: element.payload.doc.data()["email"],
+            })
+          }
+
+          if ((element.payload.doc.data()["cbu"]) == this.movimientoUsuario.value.cbu){
+            this.entradaDatosDestino.push({
+              cbu: element.payload.doc.data()["cbu"],
+              dinero: element.payload.doc.data()["dinero"],
+              email: element.payload.doc.data()["email"],
+            })
+          }
+        })})
+
+        let personaOrigen = {
+          cbu: this.entradaDatosOrigen[0].cbu,
+          dinero: (this.entradaDatosOrigen[0].dinero) - (this.movimientoUsuario.value.monto),
+          email: this.entradaDatosOrigen[0].email,
+        }
+
+        let personaDestino = {
+          cbu: this.entradaDatosDestino[0].cbu,
+          dinero: (this.entradaDatosDestino[0].dinero) + (this.movimientoUsuario.value.monto),
+          email: this.entradaDatosDestino[0].email,
+        }
+
+        if (personaOrigen.dinero < 0){
+          this.toastr.error("No puede realizar la transaccion porque no cuenta con suficiente dinero","Error")
+        } else{
+
+          this._datosService.updateUsuario(this.entradaDatosDestino[0].cbu, personaDestino)
+          .then(() => {
+            this.afs.collection(this.entradaDatosDestino[0].cbu).add(movimientoDestino);
+          })
+
+          this._datosService.updateUsuario(this.entradaDatosOrigen[0].cbu, personaOrigen)
+            .then(entrada => {
+              this.afs.collection(this.dataUser.uid).add(movimientoOrigen);
+            })
+
+          this.router.navigate(["/perfil-pantalla"]);
+        }
+
+
     }else{
       this.toastr.error("Campos incorrectos","Error")}
 
-    
+
 
 
 
   }
 
-  
+
 
 }
 

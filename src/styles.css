@@ -48,3 +48,10 @@ html,body{
   box-shadow: -5px 8px 16px 0px rgba(0,0,0,0.3) !important;
   margin-bottom: 2px !important;
 }
+
+.toast-error {
+  background-color: #dd2727 !important;
+  border-radius: 22px !important;
+  box-shadow: -5px 8px 16px 0px rgba(0,0,0,0.3) !important;
+  margin-bottom: 2px !important;
+}

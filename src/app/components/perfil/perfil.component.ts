@@ -22,6 +22,8 @@ export class PerfilComponent implements OnInit {
   saldoDis: any
   cbu: any
   mensaje: any
+  entradaDatos: any[] = []
+  codigoExiste: boolean = false
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -44,7 +46,7 @@ export class PerfilComponent implements OnInit {
   }
 
   getMovimientos(){
-    this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(6)).snapshotChanges().subscribe(data => {
+      this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(6)).snapshotChanges().subscribe(data => {
       this.cualqui = [];
       data.forEach((element: any) => {
         this.cualqui.push({
@@ -57,25 +59,41 @@ export class PerfilComponent implements OnInit {
   }
 
   guardarUser(dataUser: any) {
-    const objeUser = {
-      email: dataUser.email,
-      dinero: 500,
-      cbu: dataUser.uid
-    }
-
-    const saveUser = (objeUser: any) => {
-
-      this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser).
-      then(docRef =>{
-          this.saldoDis = String(objeUser.dinero)
-          this.cbu = String(objeUser.cbu)
+    this.afs.collection("usuarios").snapshotChanges().subscribe(data => {
+      data.forEach((element: any) => {
+        if ((element.payload.doc.data()["cbu"]) == this.uid){
+          this.codigoExiste = true
+          this.saldoDis = (element.payload.doc.data()["dinero"])
+          this.cbu = (element.payload.doc.data()["cbu"])
+        }
       })
-      .catch(error => {
+      if (this.codigoExiste == true){
+        this._datosFirestore.getUsuario(dataUser.uid).subscribe( datos => {
+        })
+        return;
+      }else{
+        const objeUser = {
+          email: dataUser.email,
+          dinero: 500,
+          cbu: dataUser.uid
+        }
+
+        const saveUser = (objeUser: any) => {
+
+          this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser).
+          then(docRef =>{
+              this.saldoDis = String(objeUser.dinero)
+              this.cbu = String(objeUser.cbu)
+          })
+          .catch(error => {
+          }
+          );
+          return objeUser;
+        }
+        saveUser(objeUser);
       }
-      );
-      return objeUser;
-    }
-    saveUser(objeUser);
+    });
+
   }
 
   copyMessage(){
