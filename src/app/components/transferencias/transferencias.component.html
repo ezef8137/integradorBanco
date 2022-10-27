@@ -32,27 +32,29 @@
   </nav>
 
 <div class="wrapper">
+  <div class="imgT">
+    <img src="https://cdn-icons-png.flaticon.com/512/3029/3029336.png" alt="">
+  </div>
   <div class="body">
     <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
       <div class="card-body text-center">
         <div class="mb-3">
-          <h4>Realizar Transferencia</h4>
+          <h4 class="transferencia">Realizar Transferencia</h4>
         </div>
-        <form (ngSubmit)="agregarMovimiento()" [formGroup]="movimientoUsuario">
-          <div class="form-floating  mb-3">
-            <input type="text"  formControlName="cbu" maxlength="28" class="form-control" placeholder="destinatario">
-            <label >Ingrese el cbu</label>
-            <span *ngIf="movimientoUsuario.get('cbu')?.hasError('required') &&  movimientoUsuario.get('cbu')?.touched" class="text-danger" >
-              (El <strong>cbu</strong> es requerido)
+        <form [formGroup]="movimientoUsuario" (ngSubmit)="agregarMovimiento()">
+          <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+              <i class="fas fa-user-circle" [class.green-icon]="this.movimientoUsuario.get('cbu')?.valid"
+                              [class.red-icon]="this.movimientoUsuario.get('cbu')?.invalid && this.movimientoUsuario.get('cbu')?.touched"></i>
             </span>
+            <input type="text" formControlName="cbu" class="form-control" placeholder="cbu">
           </div>
-          <div class="form-floating mb-3">
-            <input type="number"  formControlName="monto" class="form-control" placeholder="valor">
-            <label >Ingrese el monto</label>
-            <span *ngIf="movimientoUsuario.get('monto')?.hasError('required') &&  movimientoUsuario.get('monto')?.touched" class="text-danger" >
-              (El <strong>monto</strong> es requerido)
+          <div class="input-group input-group-lg mb-3">
+            <span class="input-group-text">
+              <i class="fa-solid fa-money-bill-transfer" [class.green-icon]=""></i>
             </span>
-          </div>
+            <input type="text" formControlName="monto" class="form-control" placeholder="Ingrese monto">
+        </div>
 
           <div class="form-floating mb-3">
             <select class="form-control" aria-label="Default select example" formControlName="motivo" placeholder="motivo">

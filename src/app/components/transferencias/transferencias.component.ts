@@ -96,8 +96,13 @@ export class TransferenciasComponent implements OnInit {
     }else{
       this.toastr.error("Campos incorrectos","Error")}
 
+    
+
 
 
   }
+
+  
+
 }
 
