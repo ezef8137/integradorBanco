@@ -45,7 +45,7 @@
         <div class="mb-3">
           <h4 class="transferencia">Solicitar Préstamo</h4>
         </div>
-        <form [formGroup]="prestamoUsuario" (ngSubmit)="prestamo()">
+        <form [formGroup]="prestamoUsuario" (ngSubmit)="calcularPrestamo()">
           <div class="input-group input-group-lg mb-3">
               <span class="input-group-text">
                   <i class="fas fa-user-circle" [class.green-icon]="this.prestamoUsuario.get('cuil')?.valid"
@@ -53,19 +53,26 @@
               </span>
               <input type="text" formControlName="cuil" class="form-control" placeholder="Cuil">
           </div>
+
           <div class="input-group input-group-lg mb-3">
               <span class="input-group-text">
                 <i class="fa-solid fa-money-bill" [class.green-icon]="this.prestamoUsuario.get('monto')?.valid"
                       [class.red-icon]="this.prestamoUsuario.get('monto')?.invalid && this.prestamoUsuario.get('monto')?.touched"></i>
               </span>
-              <input type="text" formControlName="monto" class="form-control" placeholder="Monto">
+              <select name="monto" class="form-control" formControlName="monto" aria-label="Default select example">
+                <option value="monto" disabled>Monto</option>
+                <option value="1">$20.000</option>
+                <option value="2">$50.000</option>
+                <option value="3">$100.000</option>
+                <option value="4">$300.000</option>
+              </select>
           </div>
           <div class="input-group input-group-lg mb-3">
             <span class="input-group-text">
               <i class="fa-sharp fa-solid fa-money-check-dollar" [class.green-icon]="this.prestamoUsuario.get('cuotas')?.valid"
                     [class.red-icon]="this.prestamoUsuario.get('cuotas')?.invalid && this.prestamoUsuario.get('cuotas')?.touched"></i>
             </span>
-              <select name="motivo" class="form-control" aria-label="Default select example">
+              <select name="cuotas" class="form-control" formControlName="cuotas" aria-label="Default select example">
                 <option value="cuotas" disabled>Cuotas</option>
                 <option value="6">6</option>
                 <option value="12">12</option>

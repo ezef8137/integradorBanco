@@ -14,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 export class PrestamosComponent implements OnInit {
   dataUser: any;
   prestamoUsuario: FormGroup;
+  totalPrestamo: any
+  tasa: number
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -26,17 +28,29 @@ export class PrestamosComponent implements OnInit {
     this.prestamoUsuario = this.fb.group({
       monto: ["",[Validators.required]],
       cuotas: ["", Validators.required],
-      razon: ["", Validators.required],
       cuil: ["", Validators.required]
     })
    }
 
+  // Interés simple = Préstamo x Tasa de interés x Períodos a pagar
+  // $500 x 0,03 x 6 meses
   ngOnInit(): void {
   }
 
-  prestamo(){
-    if (this.prestamoUsuario.value.cuil == "" || this.prestamoUsuario.value.monto == ""){
-      this.toastr.error("Campos sin rellenar","Error")
-      return;}
+  calcularPrestamo(){
+    if (this.prestamoUsuario.value.cuotas == 6){
+      this.tasa = 0.10
+    } else if (this.prestamoUsuario.value.cuotas == 12){
+      this.tasa = 0.30
+    }else if (this.prestamoUsuario.value.cuotas == 18){
+      this.tasa = 0.50
+    } else {
+      this.tasa = 0.70
+    }
+    this.totalPrestamo = (this.prestamoUsuario.value.monto) * (this.tasa) * parseInt(this.prestamoUsuario.value.cuotas)
+    console.log(this.prestamoUsuario.value.monto)
+    console.log(this.tasa)
+    console.log(this.prestamoUsuario.value.cuotas)
+    console.log(this.totalPrestamo)
 
 }}
