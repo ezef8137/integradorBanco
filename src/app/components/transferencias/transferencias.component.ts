@@ -88,7 +88,7 @@ export class TransferenciasComponent implements OnInit {
       const movimientoDestino = {
         horario: hora + ':' + minutos,
         fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
-        cbu: this.movimientoUsuario.value.cbu,
+        cbu: this.dataUser.uid,
         monto: "+" + "$" +(this.movimientoUsuario.value.monto),
         motivo: "Transferencia"
       }
@@ -140,18 +140,8 @@ export class TransferenciasComponent implements OnInit {
 
           this.router.navigate(["/perfil-pantalla"]);
         }
-
-
     }else{
       this.toastr.error("Campos incorrectos","Error")}
-
-
-
-
-
   }
-
-
-
 }
 

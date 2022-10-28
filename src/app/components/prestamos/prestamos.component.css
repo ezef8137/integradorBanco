@@ -14,7 +14,7 @@
   background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
   width: 450px;
-  height: 310px;
+  height: 450px;
   display: grid;
   margin-right: 80px;
 }
@@ -54,7 +54,7 @@
 
 .imgT{
   width: 300px;
-  height: 100px;
+  height: 20px;
 }
 
 /* From uiverse.io */
@@ -73,7 +73,7 @@ button {
  }
 
  button.learn-more {
-  width: 12rem;
+  width: 10rem;
   height: auto;
  }
 
