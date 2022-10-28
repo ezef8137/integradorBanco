@@ -14,7 +14,7 @@
   background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
   width: 450px;
-  height: 450px;
+  height: 510px;
   display: grid;
   margin-right: 80px;
 }
@@ -54,7 +54,7 @@
 
 .imgT{
   width: 300px;
-  height: 20px;
+  height: 10px;
 }
 
 /* From uiverse.io */

@@ -19,6 +19,7 @@ export class PrestamosComponent implements OnInit {
   tasa: number
   entradaPrestamo: any[] = []
   prestamoMovimiento: any
+  cadaCuota: any
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -32,7 +33,8 @@ export class PrestamosComponent implements OnInit {
       monto: ["",[Validators.required]],
       cuotas: ["", Validators.required],
       cbu: ["", Validators.required],
-      total: [""]
+      total: [""],
+      valorCuota: [""]
     })
    }
 
@@ -113,10 +115,12 @@ export class PrestamosComponent implements OnInit {
     }
     this.interesesPrestamo = (this.prestamoUsuario.value.monto) * (this.tasa) * parseInt(this.prestamoUsuario.value.cuotas)
     this.totalPrestamo = parseInt(this.prestamoUsuario.value.monto) + parseInt(this.interesesPrestamo)
+    this.cadaCuota = this.totalPrestamo / parseInt(this.prestamoUsuario.value.cuotas)
     this.prestamoUsuario.setValue({
       monto: this.prestamoUsuario.value.monto,
       cuotas: this.prestamoUsuario.value.cuotas,
       cbu: this.prestamoUsuario.value.cbu,
-      total: "Total a pagar: " + "$" + (this.totalPrestamo).toString()
+      total: "Total a pagar: " + "$" + (this.totalPrestamo).toString(),
+      valorCuota: (this.prestamoUsuario.value.cuotas) + " " + "cuotas" + " " + "de:" + " " + "$" + parseInt(this.cadaCuota)
     })
 }}
