@@ -20,6 +20,7 @@ export class PrestamosComponent implements OnInit {
   entradaPrestamo: any[] = []
   prestamoMovimiento: any
   cadaCuota: any
+  prestamosSolicitados: any
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -52,50 +53,65 @@ export class PrestamosComponent implements OnInit {
 
   pedirPrestamo(){
     if ((this.dataUser.uid) == (this.prestamoUsuario.value.cbu)){
-      this._datosService.getUsuarioAll().subscribe(entrada => {
-        entrada.forEach((element: any) => {
-          if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
-            this.entradaPrestamo.push({
-              cbu: element.payload.doc.data()["cbu"],
-              dinero: element.payload.doc.data()["dinero"],
-              email: element.payload.doc.data()["email"],
-            })
-          }
+
+      this.afs.collection((this.dataUser.uid).toString()).snapshotChanges().subscribe(entrada => {
+          entrada.forEach((element: any) => {
+            if ((element.payload.doc.data()["motivo"]) == "Préstamo"){
+              this.prestamosSolicitados =+ 1
+            }
+          })
+
+        }
+      )
+      if (this.prestamosSolicitados > 3){
+        this.toastr.error("Usted ha superado el limite de los 3 préstamos otorgados.", "Préstamo denegado")
+        return;
+      } else {
+        this._datosService.getUsuarioAll().subscribe(entrada => {
+          entrada.forEach((element: any) => {
+            if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
+              this.entradaPrestamo.push({
+                cbu: element.payload.doc.data()["cbu"],
+                dinero: element.payload.doc.data()["dinero"],
+                email: element.payload.doc.data()["email"],
+              })
+            }
+          })
         })
-      })
 
-      this.prestamoMovimiento = {
-        cbu: this.entradaPrestamo[0].cbu,
-        dinero: (this.entradaPrestamo[0].dinero) + (this.totalPrestamo),
-        email: this.entradaPrestamo[0].email,
+        this.prestamoMovimiento = {
+          cbu: this.entradaPrestamo[0].cbu,
+          dinero: (this.entradaPrestamo[0].dinero) + (this.totalPrestamo),
+          email: this.entradaPrestamo[0].email,
+        }
+
+        var meses = [
+          "Enero", "Febrero", "Marzo",
+          "Abril", "Mayo", "Junio", "Julio",
+          "Agosto", "Septiembre", "Octubre",
+          "Noviembre", "Diciembre"]
+        var date = new Date();
+        var hora = date.getHours();
+        var minutos = date.getMinutes();
+        var dia = date.getDate();
+        var mes = date.getMonth();
+        var yyy = date.getFullYear();
+
+        const movimientoDestino = {
+          horario: hora + ':' + minutos,
+          fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
+          cbu: "Bank Felc",
+          monto: "+" + "$" +(this.totalPrestamo),
+          motivo: "Préstamo"
+        }
+
+        this._datosService.updateUsuario(this.prestamoMovimiento.cbu, this.prestamoMovimiento)
+        .then(() => {
+          this.afs.collection(this.entradaPrestamo[0].cbu).add(movimientoDestino);
+        })
+
+        this.router.navigate(["/perfil-pantalla"]);
       }
-
-      var meses = [
-        "Enero", "Febrero", "Marzo",
-        "Abril", "Mayo", "Junio", "Julio",
-        "Agosto", "Septiembre", "Octubre",
-        "Noviembre", "Diciembre"]
-      var date = new Date();
-      var hora = date.getHours();
-      var minutos = date.getMinutes();
-      var dia = date.getDate();
-      var mes = date.getMonth();
-      var yyy = date.getFullYear();
-
-      const movimientoDestino = {
-        horario: hora + ':' + minutos,
-        fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
-        cbu: "Bank Felc",
-        monto: "+" + "$" +(this.totalPrestamo),
-        motivo: "Préstamo"
-      }
-
-      this._datosService.updateUsuario(this.prestamoMovimiento.cbu, this.prestamoMovimiento)
-      .then(() => {
-        this.afs.collection(this.entradaPrestamo[0].cbu).add(movimientoDestino);
-      })
-
-      this.router.navigate(["/perfil-pantalla"]);
 
     } else {
       this.toastr.error("Ingrese su respectivo cbu", "Error CBU")
