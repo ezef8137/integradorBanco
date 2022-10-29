@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { ToastrService } from 'ngx-toastr';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 
 @Component({
@@ -21,7 +22,6 @@ export class TransferenciasComponent implements OnInit {
   entradaDatosOrigen: any[] = []
   entradaDatosDestino: any[] = []
   cuentaEnviarDinero: {}
-
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -47,6 +47,17 @@ export class TransferenciasComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     })}
+
+  sendEmail(){
+    emailjs.send("service_9jvpp0i","template_9rf3u5h",{
+      email: (this.dataUser.email).toString(),
+      cbu: (this.dataUser.uid).toString(),
+      monto: "$" + (this.movimientoUsuario.value.monto).toString(),
+      motivo: (this.movimientoUsuario.value.motivo).toString(),
+      }, "GuwaSO_4AvHJqnKYB").then((res) => {
+        this.toastr.success("Se ha enviado un comprobante a su correo electronico.","Transacción éxitosa")
+      });
+  }
 
   agregarMovimiento(){
 
@@ -138,6 +149,7 @@ export class TransferenciasComponent implements OnInit {
               this.afs.collection(this.dataUser.uid).add(movimientoOrigen);
             })
 
+          this.sendEmail()
           this.router.navigate(["/perfil-pantalla"]);
         }
     }else{

@@ -23,7 +23,7 @@ export class RegistrarUsuarioComponent implements OnInit {
     this.registrarUsuario = this.fb.group({
       email: ["", Validators.required],
       password: ["", Validators.required],
-      RepetirPassword: ["", Validators.required]
+      repetirPassword: ["", Validators.required]
 
     })
   }
@@ -31,15 +31,18 @@ export class RegistrarUsuarioComponent implements OnInit {
   ngOnInit(): void {
   }
   registrar() {
-    const email = this.registrarUsuario.value.email;
-    const password = this.registrarUsuario.value.password;
-    const repetirPassword = this.registrarUsuario.value.repetirPassword;
-
-
+    console.log(this.registrarUsuario.value.password)
+    console.log(this.registrarUsuario.value.repetirPassword)
+    if (this.registrarUsuario.value.password !== this.registrarUsuario.value.repetirPassword) {
+      this.toastr.error(
+        'Las contraseñas ingresadas deben ser las mismas',
+        'Error'
+      );
+      return;
+    }
 
     this.loading = true;
-
-    this.afAuth.createUserWithEmailAndPassword(email, password)
+    this.afAuth.createUserWithEmailAndPassword(this.registrarUsuario.value.email, this.registrarUsuario.value.password)
       .then(() => {
         this.verificarCorreo();
       })
@@ -52,15 +55,15 @@ export class RegistrarUsuarioComponent implements OnInit {
   }
 
   verificarCorreo() {
-    this.afAuth.currentUser.then(user => user?.sendEmailVerification())
+    this.afAuth.currentUser
+      .then((user) => user?.sendEmailVerification())
       .then(() => {
-        this.toastr.info("Le enviamos un correo para que verifique", "verificar correo")
-        this.router.navigate(["/login"]);
-      })
+        this.toastr.info(
+          'Le enviamos un correo electronico para su verificacion',
+          'Verificar correo'
+        );
+        this.router.navigate(['/login']);
+      });
   }
-
-
-
-
 
 }

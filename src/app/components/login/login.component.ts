@@ -32,11 +32,7 @@ export class LoginComponent implements OnInit {
   login(){
     this.afAuth.signInWithEmailAndPassword(this.loginUsuario.value.email,this.loginUsuario.value.password)
     .then((user)=>{
-      if (user.user?.emailVerified ){
-        this.router.navigate(["/perfil-pantalla"]);
-      } else {
-        this.router.navigate(["/verificar-correo"]);
-      }
+      this.router.navigate(["/perfil-pantalla"]);
     })
     .catch((error)=>{
       this.toastr.error(this.firebaseError.codeError(error.code),"Error");

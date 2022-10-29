@@ -17,7 +17,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrarUsuarioComponent } from './components/registrar-usuario/registrar-usuario.component';
 import { VerificarCorreoComponent } from './components/verificar-correo/verificar-correo.component';
-import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component'; 
+import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { environment } from 'src/environments/environment';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -53,7 +53,6 @@ import { PrestamosComponent } from './components/prestamos/prestamos.component';
     CommonModule,
   ],
   providers: [
-    
   ],
   bootstrap: [AppComponent]
 })

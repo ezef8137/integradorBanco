@@ -5,7 +5,7 @@ import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { users } from 'src/app/models/users';
 import { ToastrService } from 'ngx-toastr';
-
+// import { jsPDF } from "jspdf"
 
 @Component({
   selector: 'app-perfil',
@@ -95,6 +95,12 @@ export class PerfilComponent implements OnInit {
     });
 
   }
+  //enviarPdf(){
+  //  const doc = new jsPDF();
+  //  doc.text("", 10, 10);
+  //  doc.text("Hello world!", 10, 10);
+  //  doc.save("movBankFelcs.pdf");
+  //}
 
   copyMessage(){
     const selBox = document.createElement('textarea');
