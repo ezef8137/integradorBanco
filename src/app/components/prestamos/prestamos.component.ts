@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { ToastrService } from 'ngx-toastr';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+
 
 @Component({
   selector: 'app-prestamos',
@@ -51,9 +53,22 @@ export class PrestamosComponent implements OnInit {
     })
   }
 
+  sendEmail(){
+    emailjs.send("service_9jvpp0i","template_dbkyxun",{
+      email: (this.dataUser.email).toString(),
+      cbu: (this.dataUser.uid).toString(),
+      monto: "$" + (this.prestamoUsuario.value.monto).toString(),
+      valorCuota: "$" + (this.cadaCuota).toString(),
+      cuotas: parseInt(this.prestamoUsuario.value.cuotas).toString(),
+      total: "$" + (this.totalPrestamo).toString(),
+      }, "GuwaSO_4AvHJqnKYB").then((res) => {
+        this.toastr.success("Se ha enviado un comprobante a su correo electronico.","Préstamo éxitoso")
+      });
+  }
+
   pedirPrestamo(){
     if ((this.dataUser.uid) == (this.prestamoUsuario.value.cbu)){
-
+      this.prestamosSolicitados = 0
       this.afs.collection((this.dataUser.uid).toString()).snapshotChanges().subscribe(entrada => {
           entrada.forEach((element: any) => {
             if ((element.payload.doc.data()["motivo"]) == "Préstamo"){
@@ -63,10 +78,8 @@ export class PrestamosComponent implements OnInit {
 
         }
       )
-      if (this.prestamosSolicitados > 3){
-        this.toastr.error("Usted ha superado el limite de los 3 préstamos otorgados.", "Préstamo denegado")
-        return;
-      } else {
+
+      if (this.prestamosSolicitados < 3){
         this._datosService.getUsuarioAll().subscribe(entrada => {
           entrada.forEach((element: any) => {
             if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
@@ -81,7 +94,7 @@ export class PrestamosComponent implements OnInit {
 
         this.prestamoMovimiento = {
           cbu: this.entradaPrestamo[0].cbu,
-          dinero: (this.entradaPrestamo[0].dinero) + (this.totalPrestamo),
+          dinero: parseInt(this.entradaPrestamo[0].dinero) + parseInt(this.prestamoUsuario.value.monto),
           email: this.entradaPrestamo[0].email,
         }
 
@@ -101,7 +114,7 @@ export class PrestamosComponent implements OnInit {
           horario: hora + ':' + minutos,
           fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
           cbu: "Bank Felc",
-          monto: "+" + "$" +(this.totalPrestamo),
+          monto: "+" + "$" +(this.prestamoUsuario.value.monto),
           motivo: "Préstamo"
         }
 
@@ -109,10 +122,11 @@ export class PrestamosComponent implements OnInit {
         .then(() => {
           this.afs.collection(this.entradaPrestamo[0].cbu).add(movimientoDestino);
         })
-
+        this.sendEmail()
         this.router.navigate(["/perfil-pantalla"]);
+      } else {
+        this.toastr.error("Usted ha superado el limite de los 3 préstamos otorgados.", "Préstamo denegado")
       }
-
     } else {
       this.toastr.error("Ingrese su respectivo cbu", "Error CBU")
     }

@@ -54,9 +54,10 @@ export class TransferenciasComponent implements OnInit {
       cbu: (this.dataUser.uid).toString(),
       monto: "$" + (this.movimientoUsuario.value.monto).toString(),
       motivo: (this.movimientoUsuario.value.motivo).toString(),
-      }, "GuwaSO_4AvHJqnKYB").then((res) => {
+      }, "GuwaSO_4AvHJqnKYB")
+      .then((res) => {
         this.toastr.success("Se ha enviado un comprobante a su correo electronico.","Transacción éxitosa")
-      });
+      })
   }
 
   agregarMovimiento(){
