@@ -43,7 +43,7 @@
 </nav>
 
 <div class="wrapper">
-  <div class="body">
+  <div *ngIf="!loading" class="body">
     <div class="imgT">
       <img
         src="https://cdn-icons-png.flaticon.com/512/1992/1992108.png"
@@ -148,8 +148,8 @@
         <script type="text/javascript">
           emailjs.init("GuwaSO_4AvHJqnKYB");
         </script>
-
       </div>
     </div>
   </div>
+  <app-spinner *ngIf="loading"></app-spinner>
 </div>

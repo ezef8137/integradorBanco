@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Router } from '@angular/router';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { users } from 'src/app/models/users';
 import { ToastrService } from 'ngx-toastr';
-// import { jsPDF } from "jspdf"
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas'
 
 @Component({
   selector: 'app-perfil',
@@ -13,17 +14,22 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
+  @ViewChild('htmlData') htmlData!: ElementRef;
+
   dataUser: any;
   cualqui: any[] = []
+  users: any[] = []
   movimientos: [];
   listaUsers: any= []
   objeUser:any
   uid: any
+  $:any;
   saldoDis: any
   cbu: any
   mensaje: any
   entradaDatos: any[] = []
-  codigoExiste: boolean = false
+  codigoExiste: boolean = false;
+  loading: boolean=false
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -33,6 +39,7 @@ export class PerfilComponent implements OnInit {
     private afs: AngularFirestore) {  }
 
   ngOnInit(): void {
+    setTimeout(()=>{this.loading=true;}, 3000);
     this.afAuth.currentUser.then(user => {
       if(user) {
         this.dataUser = user;
@@ -43,7 +50,24 @@ export class PerfilComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     })
+
   }
+
+  public openPDF(): void {
+    const doc= new jsPDF();
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 210;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position =40;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('Bank-Felcs.pdf');
+      
+    });
+  }
+
 
   getMovimientos(){
       this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(6)).snapshotChanges().subscribe(data => {
@@ -95,12 +119,7 @@ export class PerfilComponent implements OnInit {
     });
 
   }
-  //enviarPdf(){
-  //  const doc = new jsPDF();
-  //  doc.text("", 10, 10);
-  //  doc.text("Hello world!", 10, 10);
-  //  doc.save("movBankFelcs.pdf");
-  //}
+
 
   copyMessage(){
     const selBox = document.createElement('textarea');

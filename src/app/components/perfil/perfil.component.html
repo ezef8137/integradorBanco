@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: black;">
   <div class="container-fluid">
     <button
@@ -75,12 +76,12 @@
     </div>
 
     <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
-      <div class="card-pa text-center">
+      <div  class="card-pa text-center">
         <div class="mt-2">
-          <span class="h3">Ultimos Movimientos</span>
+          <span class="h3">Ultimos Movimientos</span >
         </div>
             <h5 style="margin-top: 30px;" *ngIf="cualqui.length == 0">No hay datos para mostrar</h5>
-            <table *ngIf="cualqui.length > 0" class="table table-striped table-responsive mt-3">
+            <table id="htmlData" *ngIf="cualqui.length > 0" class="table table-striped table-responsive mt-3">
                 <thead>
                   <tr>
                     <th>Cbu Destino</th>
@@ -101,11 +102,12 @@
                 </tbody>
               </table>
         <div class="text-center" style="margin-bottom: 10px;">
-          <button>Descargar PDF</button>
+          <button (click)="openPDF()">Descargar PDF</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 
