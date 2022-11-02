@@ -17,8 +17,6 @@ export class DatosFirebaseService {
     return this.firestore.collection('usuarios', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
   }
 
-
-
   deleteUsuario(id: string): Promise<any> {
     return this.firestore.collection('usuarios').doc(id).delete();
   }

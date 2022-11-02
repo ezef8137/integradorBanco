@@ -48,7 +48,6 @@ export class RegistrarUsuarioComponent implements OnInit {
       })
       .catch((error) => {
         this.loading = false
-        console.log(error);
         this.toastr.error(this.firebaseError.codeError(error.code), "Error");
       });
 

@@ -3,10 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Router } from '@angular/router';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { users } from 'src/app/models/users';
 import { ToastrService } from 'ngx-toastr';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas'
+// import { jsPDF } from "jspdf"
 
 @Component({
   selector: 'app-perfil',
@@ -78,7 +76,6 @@ export class PerfilComponent implements OnInit {
           ...element.payload.doc.data()
         })
       });
-
     });
   }
 
@@ -104,14 +101,12 @@ export class PerfilComponent implements OnInit {
 
         const saveUser = (objeUser: any) => {
 
-          this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser).
-          then(docRef =>{
+          this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser)
+          .then(docRef =>{
               this.saldoDis = String(objeUser.dinero)
               this.cbu = String(objeUser.cbu)
           })
-          .catch(error => {
-          }
-          );
+          .catch(error => {});
           return objeUser;
         }
         saveUser(objeUser);
@@ -119,7 +114,12 @@ export class PerfilComponent implements OnInit {
     });
 
   }
-
+  //enviarPdf(){
+  //  const doc = new jsPDF();
+  //  doc.text("", 10, 10);
+  //  doc.text("Hello world!", 10, 10);
+  //  doc.save("movBankFelcs.pdf");
+  //}
 
   copyMessage(){
     const selBox = document.createElement('textarea');

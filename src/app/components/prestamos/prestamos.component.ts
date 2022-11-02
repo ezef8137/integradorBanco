@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { ToastrService } from 'ngx-toastr';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+
 
 @Component({
   selector: 'app-prestamos',
@@ -20,6 +22,7 @@ export class PrestamosComponent implements OnInit {
   entradaPrestamo: any[] = []
   prestamoMovimiento: any
   cadaCuota: any
+  prestamosSolicitados: any
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -50,53 +53,80 @@ export class PrestamosComponent implements OnInit {
     })
   }
 
+  sendEmail(){
+    emailjs.send("service_9jvpp0i","template_dbkyxun",{
+      email: (this.dataUser.email).toString(),
+      cbu: (this.dataUser.uid).toString(),
+      monto: "$" + (this.prestamoUsuario.value.monto).toString(),
+      valorCuota: "$" + (this.cadaCuota).toString(),
+      cuotas: parseInt(this.prestamoUsuario.value.cuotas).toString(),
+      total: "$" + (this.totalPrestamo).toString(),
+      }, "GuwaSO_4AvHJqnKYB").then((res) => {
+        this.toastr.success("Se ha enviado un comprobante a su correo electronico.","Préstamo éxitoso")
+      });
+  }
+
   pedirPrestamo(){
     if ((this.dataUser.uid) == (this.prestamoUsuario.value.cbu)){
-      this._datosService.getUsuarioAll().subscribe(entrada => {
-        entrada.forEach((element: any) => {
-          if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
-            this.entradaPrestamo.push({
-              cbu: element.payload.doc.data()["cbu"],
-              dinero: element.payload.doc.data()["dinero"],
-              email: element.payload.doc.data()["email"],
-            })
-          }
+      this.prestamosSolicitados = 0
+      this.afs.collection((this.dataUser.uid).toString()).snapshotChanges().subscribe(entrada => {
+          entrada.forEach((element: any) => {
+            if ((element.payload.doc.data()["motivo"]) == "Préstamo"){
+              this.prestamosSolicitados =+ 1
+            }
+          })
+
+        }
+      )
+
+      if (this.prestamosSolicitados < 3){
+        this._datosService.getUsuarioAll().subscribe(entrada => {
+          entrada.forEach((element: any) => {
+            if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
+              this.entradaPrestamo.push({
+                cbu: element.payload.doc.data()["cbu"],
+                dinero: element.payload.doc.data()["dinero"],
+                email: element.payload.doc.data()["email"],
+              })
+            }
+          })
         })
-      })
 
-      this.prestamoMovimiento = {
-        cbu: this.entradaPrestamo[0].cbu,
-        dinero: (this.entradaPrestamo[0].dinero) + (this.totalPrestamo),
-        email: this.entradaPrestamo[0].email,
+        this.prestamoMovimiento = {
+          cbu: this.entradaPrestamo[0].cbu,
+          dinero: parseInt(this.entradaPrestamo[0].dinero) + parseInt(this.prestamoUsuario.value.monto),
+          email: this.entradaPrestamo[0].email,
+        }
+
+        var meses = [
+          "Enero", "Febrero", "Marzo",
+          "Abril", "Mayo", "Junio", "Julio",
+          "Agosto", "Septiembre", "Octubre",
+          "Noviembre", "Diciembre"]
+        var date = new Date();
+        var hora = date.getHours();
+        var minutos = date.getMinutes();
+        var dia = date.getDate();
+        var mes = date.getMonth();
+        var yyy = date.getFullYear();
+
+        const movimientoDestino = {
+          horario: hora + ':' + minutos,
+          fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
+          cbu: "Bank Felc",
+          monto: "+" + "$" +(this.prestamoUsuario.value.monto),
+          motivo: "Préstamo"
+        }
+
+        this._datosService.updateUsuario(this.prestamoMovimiento.cbu, this.prestamoMovimiento)
+        .then(() => {
+          this.afs.collection(this.entradaPrestamo[0].cbu).add(movimientoDestino);
+        })
+        this.sendEmail()
+        this.router.navigate(["/perfil-pantalla"]);
+      } else {
+        this.toastr.error("Usted ha superado el limite de los 3 préstamos otorgados.", "Préstamo denegado")
       }
-
-      var meses = [
-        "Enero", "Febrero", "Marzo",
-        "Abril", "Mayo", "Junio", "Julio",
-        "Agosto", "Septiembre", "Octubre",
-        "Noviembre", "Diciembre"]
-      var date = new Date();
-      var hora = date.getHours();
-      var minutos = date.getMinutes();
-      var dia = date.getDate();
-      var mes = date.getMonth();
-      var yyy = date.getFullYear();
-
-      const movimientoDestino = {
-        horario: hora + ':' + minutos,
-        fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
-        cbu: "Bank Felc",
-        monto: "+" + "$" +(this.totalPrestamo),
-        motivo: "Préstamo"
-      }
-
-      this._datosService.updateUsuario(this.prestamoMovimiento.cbu, this.prestamoMovimiento)
-      .then(() => {
-        this.afs.collection(this.entradaPrestamo[0].cbu).add(movimientoDestino);
-      })
-
-      this.router.navigate(["/perfil-pantalla"]);
-
     } else {
       this.toastr.error("Ingrese su respectivo cbu", "Error CBU")
     }

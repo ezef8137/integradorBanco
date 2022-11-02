@@ -64,7 +64,7 @@ export class TransferenciasComponent implements OnInit {
       }, "GuwaSO_4AvHJqnKYB").then((res) => {
         this.loading=false
         this.toastr.success("Se ha enviado un comprobante a su correo electronico.","Transacción éxitosa")
-      });
+      })
   }
 
   agregarMovimiento(){
