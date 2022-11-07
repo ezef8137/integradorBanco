@@ -26,11 +26,11 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { TransferenciasComponent } from './components/transferencias/transferencias.component';
 import { PrestamosComponent } from './components/prestamos/prestamos.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
   declarations: [
-    PerfilComponent,
     AppComponent,
     LoginComponent,
     RegistrarUsuarioComponent,
@@ -44,6 +44,7 @@ import { PrestamosComponent } from './components/prestamos/prestamos.component';
   imports: [
     AngularFirestoreModule,
     BrowserModule,
+    NgxChartsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

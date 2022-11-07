@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
-// import { jsPDF } from "jspdf"
+import { jsPDF } from "jspdf"
+import html2canvas from 'html2canvas';
+import { NgxChartsModule } from "@swimlane/ngx-charts"
 
 @Component({
   selector: 'app-perfil',
@@ -13,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PerfilComponent implements OnInit {
   @ViewChild('htmlData') htmlData!: ElementRef;
-
   dataUser: any;
   cualqui: any[] = []
   users: any[] = []
@@ -24,31 +25,63 @@ export class PerfilComponent implements OnInit {
   $:any;
   saldoDis: any
   cbu: any
-  mensaje: any
   entradaDatos: any[] = []
   codigoExiste: boolean = false;
   loading: boolean=false
+  view: [number, number] = [800, 400];
+  datosGrafico:any[]=[]
+  opcionesGrafico: any
+  optSupermercado: any
+  optServicios: any
+  optIndumentaria: any
+  optVarios: any
+  data: any
+
+
+  gradient: boolean = true;
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
+  legendPosition: string = 'below';
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
     private toastr: ToastrService,
     public _datosFirestore: DatosFirebaseService,
-    private afs: AngularFirestore) {  }
+    private afs: AngularFirestore) { 
+     }
+    
 
   ngOnInit(): void {
-    setTimeout(()=>{this.loading=true;}, 3000);
+    setTimeout(()=>{this.loading=true;}, 10000);
     this.afAuth.currentUser.then(user => {
       if(user) {
         this.dataUser = user;
         this.uid = this.dataUser.uid
         this.guardarUser(this.dataUser)
         this.getMovimientos()
+        this.grafico()
       }else {
         this.router.navigate(['/login']);
       }
     })
+  }
 
+  get single() {
+    return this.datosGrafico;
+  }
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   public openPDF(): void {
@@ -61,9 +94,56 @@ export class PerfilComponent implements OnInit {
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position =40;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('Bank-Felcs.pdf');
+      PDF.save('BankFelcs.pdf');
       
     });
+  }
+
+  grafico(){
+      this.afs.collection((this.dataUser.uid).toString()).snapshotChanges().subscribe(entrada => {
+        this.optSupermercado = 0
+        this.optVarios = 0
+        this.optIndumentaria = 0
+        this.optServicios = 0
+        entrada.forEach((element: any) => { 
+          const str = element.payload.doc.data()["monto"]
+          const newStr = str.slice(1)
+          const newNewStr = newStr.slice(1) // variable que contiene el monto en string sin signos
+          if ((element.payload.doc.data()["motivo"]) == "Supermercado"){
+            this.optSupermercado = parseInt(this.optSupermercado) + parseInt(newNewStr)
+          } else if ((element.payload.doc.data()["motivo"]) == "Varios"){
+            this.optVarios = parseInt(this.optVarios) + parseInt(newNewStr)
+          } else if ((element.payload.doc.data()["motivo"]) == "Servicios"){
+            this.optServicios = parseInt(this.optServicios) + parseInt(newNewStr)
+          } else if ((element.payload.doc.data()["motivo"]) == "Indumentaria"){
+            this.optIndumentaria = parseInt(this.optIndumentaria) + parseInt(newNewStr)
+          }
+        })
+
+        const objsuper = {
+          name: "Supermercado",
+          value: this.optSupermercado
+        }
+
+        const objvarios = {
+          name: "Varios",
+          value: this.optVarios
+        }
+
+        const objservicios = {
+          name: "Servicios",
+          value: this.optServicios
+        }
+
+        const objindumentaria = {
+          name: "Indumentaria",
+          value: this.optIndumentaria
+        }
+
+        this.datosGrafico = [objindumentaria, objservicios, objsuper, objvarios]
+
+        }
+      )
   }
 
 
@@ -89,8 +169,6 @@ export class PerfilComponent implements OnInit {
         }
       })
       if (this.codigoExiste == true){
-        this._datosFirestore.getUsuario(dataUser.uid).subscribe( datos => {
-        })
         return;
       }else{
         const objeUser = {
@@ -114,12 +192,6 @@ export class PerfilComponent implements OnInit {
     });
 
   }
-  //enviarPdf(){
-  //  const doc = new jsPDF();
-  //  doc.text("", 10, 10);
-  //  doc.text("Hello world!", 10, 10);
-  //  doc.save("movBankFelcs.pdf");
-  //}
 
   copyMessage(){
     const selBox = document.createElement('textarea');

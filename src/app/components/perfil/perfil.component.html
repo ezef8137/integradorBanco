@@ -69,9 +69,7 @@
                 <span class="titulo-letra display-4 badge rounded-pill" style="background-color: #4B79A1;">{{ this.cbu }}</span>
               </div>
           </div>
-          <div class="col-lg-8">
-            <span>{{this.mensaje}}</span>
-          </div>
+
       </div>
     </div>
 
@@ -102,12 +100,39 @@
                 </tbody>
               </table>
         <div class="text-center" style="margin-bottom: 10px;">
-          <button (click)="openPDF()">Descargar PDF</button>
+          <button *ngIf="cualqui.length > 0" (click)="openPDF()" readonly>Descargar PDF</button>
         </div>
       </div>
     </div>
   </div>
+</div>  
+<div class="wrapper">
+  <div class="body">
+    <div class="container mt-0 mb-2">
+      <div class="row mt-2">
+          <div class="col-lg-6">
+              <div class="card-GRAFICO">
+                <h1 class="display-5">GRAFICO DE GASTOS</h1>
+                <ngx-charts-pie-chart class="grafico"
+                [view]="view"
+                scheme="air"
+                [results]="single"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)">
+                </ngx-charts-pie-chart>
+              </div>
+          </div>
+        
 </div>
+
+
+
+
 
 
 

@@ -5,12 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { ToastrService } from 'ngx-toastr';
-//import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
-
-
-
-
 
 @Component({
   selector: 'app-transferencias',
@@ -27,6 +22,8 @@ export class TransferenciasComponent implements OnInit {
   entradaDatosDestino: any[] = []
   cuentaEnviarDinero: {}
   public loading:boolean=false;
+  flagExisteUsuario:boolean=false
+  enviarMail: any;
 
   constructor(
     public _datosService: DatosFirebaseService,
@@ -58,17 +55,44 @@ export class TransferenciasComponent implements OnInit {
   sendEmail(){
     emailjs.send("service_9jvpp0i","template_9rf3u5h",{
       email: (this.dataUser.email).toString(),
-      cbu: (this.dataUser.uid).toString(),
+      cbu: (this.movimientoUsuario.value.cbu).toString(),
       monto: "$" + (this.movimientoUsuario.value.monto).toString(),
       motivo: (this.movimientoUsuario.value.motivo).toString(),
-      }, "GuwaSO_4AvHJqnKYB").then((res) => {
-        this.loading=false
+      }, "GuwaSO_4AvHJqnKYB")
+      .then((res) => {
         this.toastr.success("Se ha enviado un comprobante a su correo electronico.","Transacción éxitosa")
+      })
+
+    this._datosService.getUsuarioAll().subscribe(entrada => {
+      entrada.forEach((element: any) => {
+        if ((element.payload.doc.data()["cbu"]) == this.movimientoUsuario.value.cbu){
+          this.enviarMail.push({
+            email: element.payload.doc.data()["email"]
+          })
+        }})
+
+      emailjs.send("service_9jvpp0i","template_9rf3u5h",{
+        email: (this.enviarMail[0].email).toString(),
+        cbu: (this.dataUser.uid).toString(),
+        monto: "$" + (this.movimientoUsuario.value.monto).toString(),
+        motivo: (this.movimientoUsuario.value.motivo).toString(),
+        }, "GuwaSO_4AvHJqnKYB")
+        .then((res) => {
+        })
       })
   }
 
   agregarMovimiento(){
-
+    this._datosService.getUsuarioAll().subscribe(entrada => { // valido que el cbu exista en el sistema
+      entrada.forEach((element: any) => {
+        if ((element.payload.doc.data()["cbu"]) == this.movimientoUsuario.value.cbu){
+          this.flagExisteUsuario = true
+        }})
+      if (this.flagExisteUsuario == true){
+        this.toastr.error("El cbu no existe en nuestro sistema.","Error")
+        return;
+      }})
+    
     if (this.movimientoUsuario.value.cbu == this.dataUser.uid){
       this.toastr.error("No se puede enviar dinero usted mismo","Error")
       return;
@@ -120,7 +144,7 @@ export class TransferenciasComponent implements OnInit {
               dinero: element.payload.doc.data()["dinero"],
               email: element.payload.doc.data()["email"],
             })
-          }
+          } 
 
           if ((element.payload.doc.data()["cbu"]) == this.movimientoUsuario.value.cbu){
             this.entradaDatosDestino.push({
@@ -128,7 +152,9 @@ export class TransferenciasComponent implements OnInit {
               dinero: element.payload.doc.data()["dinero"],
               email: element.payload.doc.data()["email"],
             })
+
           }
+
         })})
 
         let personaOrigen = {

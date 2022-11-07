@@ -41,8 +41,6 @@ export class PrestamosComponent implements OnInit {
     })
    }
 
-  // Interés simple = Préstamo x Tasa de interés x Períodos a pagar
-  // $500 x 0,03 x 6 meses
   ngOnInit(): void {
     this.afAuth.currentUser.then(user => {
       if(user) {
@@ -79,7 +77,7 @@ export class PrestamosComponent implements OnInit {
         }
       )
 
-      if (this.prestamosSolicitados < 3){
+      if (this.prestamosSolicitados <= 3){
         this._datosService.getUsuarioAll().subscribe(entrada => {
           entrada.forEach((element: any) => {
             if ((element.payload.doc.data()["cbu"]) == this.dataUser.uid){
@@ -125,7 +123,7 @@ export class PrestamosComponent implements OnInit {
         this.sendEmail()
         this.router.navigate(["/perfil-pantalla"]);
       } else {
-        this.toastr.error("Usted ha superado el limite de los 3 préstamos otorgados.", "Préstamo denegado")
+        this.toastr.error("Usted ha superado el limite de los préstamos otorgados por el banco.", "Préstamo denegado")
       }
     } else {
       this.toastr.error("Ingrese su respectivo cbu", "Error CBU")
@@ -134,6 +132,8 @@ export class PrestamosComponent implements OnInit {
   }
 
   calcularPrestamo(){
+    // Interés simple = Préstamo x Tasa de interés x Períodos a pagar
+    // $500 x 0,03 x 6 meses
     if (this.prestamoUsuario.value.cuotas == "6"){
       this.tasa = 0.04
     } else if (this.prestamoUsuario.value.cuotas == "12"){

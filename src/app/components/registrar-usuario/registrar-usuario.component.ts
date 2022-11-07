@@ -31,8 +31,6 @@ export class RegistrarUsuarioComponent implements OnInit {
   ngOnInit(): void {
   }
   registrar() {
-    console.log(this.registrarUsuario.value.password)
-    console.log(this.registrarUsuario.value.repetirPassword)
     if (this.registrarUsuario.value.password !== this.registrarUsuario.value.repetirPassword) {
       this.toastr.error(
         'Las contraseñas ingresadas deben ser las mismas',
