@@ -1,0 +1,177 @@
+[debug] [2022-11-09T15:46:33.840Z] ----------------------------------------------------------------------
+[debug] [2022-11-09T15:46:33.844Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2022-11-09T15:46:33.845Z] CLI Version:   11.16.0
+[debug] [2022-11-09T15:46:33.845Z] Platform:      win32
+[debug] [2022-11-09T15:46:33.845Z] Node Version:  v16.17.0
+[debug] [2022-11-09T15:46:33.847Z] Time:          Wed Nov 09 2022 12:46:33 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-11-09T15:46:33.847Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-09T15:46:33.994Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-09T15:46:33.995Z] > authorizing via signed-in user (cecigasparr@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\CeciGaspar\Desktop\integradorBanco
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-11-09T15:46:37.222Z] Using project from CLI flag: login-b61ac
+[debug] [2022-11-09T15:46:37.225Z] > refreshing access token with scopes: []
+[debug] [2022-11-09T15:46:37.229Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-11-09T15:46:37.230Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-11-09T15:46:38.091Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-11-09T15:46:38.092Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-11-09T15:46:38.122Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac [none]
+[debug] [2022-11-09T15:46:38.734Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac 403
+[debug] [2022-11-09T15:46:38.735Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2022-11-09T15:46:38.737Z] HTTP Error: 403, The caller does not have permission
+[debug] [2022-11-09T15:46:39.071Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:288:77)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[error] 
+[error] Error: Failed to get Firebase project login-b61ac. Please make sure the project exists and your account has permission to access it.
+[debug] [2022-11-09T15:46:58.384Z] ----------------------------------------------------------------------
+[debug] [2022-11-09T15:46:58.387Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2022-11-09T15:46:58.387Z] CLI Version:   11.16.0
+[debug] [2022-11-09T15:46:58.388Z] Platform:      win32
+[debug] [2022-11-09T15:46:58.388Z] Node Version:  v16.17.0
+[debug] [2022-11-09T15:46:58.389Z] Time:          Wed Nov 09 2022 12:46:58 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-11-09T15:46:58.389Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-09T15:46:58.489Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-09T15:46:58.490Z] > authorizing via signed-in user (cecigasparr@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\CeciGaspar\Desktop\integradorBanco
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-11-09T15:47:00.431Z] Using project from CLI flag: login-b61ac
+[debug] [2022-11-09T15:47:00.437Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac [none]
+[debug] [2022-11-09T15:47:01.037Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac 403
+[debug] [2022-11-09T15:47:01.037Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2022-11-09T15:47:01.040Z] HTTP Error: 403, The caller does not have permission
+[debug] [2022-11-09T15:47:01.367Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:288:77)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[error] 
+[error] Error: Failed to get Firebase project login-b61ac. Please make sure the project exists and your account has permission to access it.
+[debug] [2022-11-09T15:47:24.231Z] ----------------------------------------------------------------------
+[debug] [2022-11-09T15:47:24.233Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2022-11-09T15:47:24.234Z] CLI Version:   11.16.0
+[debug] [2022-11-09T15:47:24.234Z] Platform:      win32
+[debug] [2022-11-09T15:47:24.234Z] Node Version:  v16.17.0
+[debug] [2022-11-09T15:47:24.235Z] Time:          Wed Nov 09 2022 12:47:24 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-11-09T15:47:24.236Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-09T15:47:24.331Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-09T15:47:24.332Z] > authorizing via signed-in user (cecigasparr@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\CeciGaspar\Desktop\integradorBanco
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-11-09T15:47:25.848Z] Using project from CLI flag: login-b61ac
+[debug] [2022-11-09T15:47:25.855Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac [none]
+[debug] [2022-11-09T15:47:26.450Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac 403
+[debug] [2022-11-09T15:47:26.451Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2022-11-09T15:47:26.453Z] HTTP Error: 403, The caller does not have permission
+[debug] [2022-11-09T15:47:26.768Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:288:77)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[error] 
+[error] Error: Failed to get Firebase project login-b61ac. Please make sure the project exists and your account has permission to access it.
+[debug] [2022-11-09T16:17:05.276Z] ----------------------------------------------------------------------
+[debug] [2022-11-09T16:17:05.278Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2022-11-09T16:17:05.279Z] CLI Version:   11.16.0
+[debug] [2022-11-09T16:17:05.279Z] Platform:      win32
+[debug] [2022-11-09T16:17:05.279Z] Node Version:  v16.17.0
+[debug] [2022-11-09T16:17:05.281Z] Time:          Wed Nov 09 2022 13:17:05 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-11-09T16:17:05.281Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-09T16:17:05.372Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-09T16:17:05.372Z] > authorizing via signed-in user (cecigasparr@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\CeciGaspar\Desktop\integradorBanco
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2022-11-09T16:17:17.682Z] Using project from CLI flag: login-b61ac
+[debug] [2022-11-09T16:17:17.687Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac [none]
+[debug] [2022-11-09T16:17:18.318Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac 403
+[debug] [2022-11-09T16:17:18.319Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/login-b61ac {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2022-11-09T16:17:18.321Z] HTTP Error: 403, The caller does not have permission
+[debug] [2022-11-09T16:17:18.527Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\CeciGaspar\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:288:77)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[error] 
+[error] Error: Failed to get Firebase project login-b61ac. Please make sure the project exists and your account has permission to access it.
