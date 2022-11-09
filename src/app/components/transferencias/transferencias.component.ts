@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DatosFirebaseService } from 'src/app/services/datos-firebase.service';
 import { ToastrService } from 'ngx-toastr';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+import { async } from '@firebase/util';
 
 @Component({
   selector: 'app-transferencias',
@@ -13,6 +14,7 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
   styleUrls: ['./transferencias.component.css']
 })
 export class TransferenciasComponent implements OnInit {
+[x: string]: any;
   dataUser: any;
   movimientoUsuario: FormGroup;
   objFirebase: FormGroup;
@@ -21,7 +23,6 @@ export class TransferenciasComponent implements OnInit {
   entradaDatosOrigen: any[] = []
   entradaDatosDestino: any[] = []
   cuentaEnviarDinero: {}
-  public loading:boolean=false;
   flagExisteUsuario:boolean=false
   enviarMail: any;
 
@@ -49,8 +50,8 @@ export class TransferenciasComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     })}
-  
-    
+
+
 
   sendEmail(){
     emailjs.send("service_9jvpp0i","template_9rf3u5h",{
@@ -82,17 +83,23 @@ export class TransferenciasComponent implements OnInit {
       })
   }
 
-  agregarMovimiento(){
+  encontrarCbu(){
     this._datosService.getUsuarioAll().subscribe(entrada => { // valido que el cbu exista en el sistema
       entrada.forEach((element: any) => {
-        if ((element.payload.doc.data()["cbu"]) == this.movimientoUsuario.value.cbu){
+        if ((element.payload.doc.data()["cbu"]).toString() == (this.movimientoUsuario.value.cbu).toString()){
           this.flagExisteUsuario = true
         }})
-      if (this.flagExisteUsuario == true){
+      if (this.flagExisteUsuario == false){
         this.toastr.error("El cbu no existe en nuestro sistema.","Error")
         return;
-      }})
-    
+      }
+      })
+
+  }
+
+  agregarMovimiento(){
+    this.encontrarCbu()
+
     if (this.movimientoUsuario.value.cbu == this.dataUser.uid){
       this.toastr.error("No se puede enviar dinero usted mismo","Error")
       return;
@@ -108,6 +115,11 @@ export class TransferenciasComponent implements OnInit {
       return;
     }
 
+    if (this.movimientoUsuario.value.motivo == "" || this.movimientoUsuario.value.motivo == null){
+      this.toastr.error("Campos sin rellenar","Error")
+      return;
+    }
+
     if (String(this.movimientoUsuario.value.cbu).length == 28 && (this.movimientoUsuario.value.monto) > 0){
       var meses = [
         "Enero", "Febrero", "Marzo",
@@ -115,13 +127,12 @@ export class TransferenciasComponent implements OnInit {
         "Agosto", "Septiembre", "Octubre",
         "Noviembre", "Diciembre"]
       var date = new Date();
-      var hora = date.getHours();
-      var minutos = date.getMinutes();
+      var hora = date.toLocaleTimeString();
       var dia = date.getDate();
       var mes = date.getMonth();
       var yyy = date.getFullYear();
       const movimientoOrigen = {
-        horario: hora + ':' + minutos,
+        horario: hora,
         fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
         cbu: this.movimientoUsuario.value.cbu,
         monto: "-" + "$" +(this.movimientoUsuario.value.monto),
@@ -129,7 +140,7 @@ export class TransferenciasComponent implements OnInit {
       }
 
       const movimientoDestino = {
-        horario: hora + ':' + minutos,
+        horario: hora,
         fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
         cbu: this.dataUser.uid,
         monto: "+" + "$" +(this.movimientoUsuario.value.monto),
@@ -144,7 +155,7 @@ export class TransferenciasComponent implements OnInit {
               dinero: element.payload.doc.data()["dinero"],
               email: element.payload.doc.data()["email"],
             })
-          } 
+          }
 
           if ((element.payload.doc.data()["cbu"]) == this.movimientoUsuario.value.cbu){
             this.entradaDatosDestino.push({
@@ -183,9 +194,8 @@ export class TransferenciasComponent implements OnInit {
               this.afs.collection(this.dataUser.uid).add(movimientoOrigen);
             })
 
-          
-          this.sendEmail()
-          setTimeout(()=>{this.loading=true;}, 7000);
+
+          //this.sendEmail()
           this.router.navigate(["/perfil-pantalla"]);
         }
     }else{

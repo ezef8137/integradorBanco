@@ -35,7 +35,7 @@ export class PrestamosComponent implements OnInit {
     this.prestamoUsuario = this.fb.group({
       monto: ["",[Validators.required]],
       cuotas: ["", Validators.required],
-      cbu: ["", Validators.required],
+      cbu: ["", [Validators.required, Validators.minLength(28), Validators.maxLength(28)]],
       total: [""],
       valorCuota: [""]
     })
@@ -72,10 +72,7 @@ export class PrestamosComponent implements OnInit {
             if ((element.payload.doc.data()["motivo"]) == "Préstamo"){
               this.prestamosSolicitados =+ 1
             }
-          })
-
-        }
-      )
+          })})
 
       if (this.prestamosSolicitados <= 3){
         this._datosService.getUsuarioAll().subscribe(entrada => {
@@ -102,16 +99,15 @@ export class PrestamosComponent implements OnInit {
           "Agosto", "Septiembre", "Octubre",
           "Noviembre", "Diciembre"]
         var date = new Date();
-        var hora = date.getHours();
-        var minutos = date.getMinutes();
+        var hora = date.toLocaleTimeString();
         var dia = date.getDate();
         var mes = date.getMonth();
         var yyy = date.getFullYear();
 
         const movimientoDestino = {
-          horario: hora + ':' + minutos,
+          horario: hora,
           fecha: dia + ' de ' + meses[mes] + ' de ' + yyy,
-          cbu: "Bank Felc",
+          cbu: "Bank Felcs",
           monto: "+" + "$" +(this.prestamoUsuario.value.monto),
           motivo: "Préstamo"
         }
@@ -121,6 +117,7 @@ export class PrestamosComponent implements OnInit {
           this.afs.collection(this.entradaPrestamo[0].cbu).add(movimientoDestino);
         })
         this.sendEmail()
+
         this.router.navigate(["/perfil-pantalla"]);
       } else {
         this.toastr.error("Usted ha superado el limite de los préstamos otorgados por el banco.", "Préstamo denegado")

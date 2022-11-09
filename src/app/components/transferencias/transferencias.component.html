@@ -43,7 +43,7 @@
 </nav>
 
 <div class="wrapper">
-  <div *ngIf="!loading" class="body">
+  <div class="body">
     <div class="imgT">
       <img
         src="https://cdn-icons-png.flaticon.com/512/1992/1992108.png"
@@ -128,16 +128,7 @@
           </div>
 
           <div class="d-grid gap-2 text-center" style="justify-content: center">
-            <button
-              class="learn-more"
-              [disabled]="movimientoUsuario.invalid"
-              type="submit"
-            >
-              <span class="circle" aria-hidden="true">
-                <span class="icon arrow"></span>
-              </span>
-              <span class="button-text">Aceptar</span>
-            </button>
+            <button type="submit" readonly>Aceptar</button>
           </div>
         </form>
 
@@ -151,5 +142,4 @@
       </div>
     </div>
   </div>
-  <app-spinner *ngIf="loading"></app-spinner>
 </div>

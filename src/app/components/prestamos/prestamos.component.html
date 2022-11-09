@@ -51,7 +51,7 @@
                   <i class="fas fa-user-circle" [class.green-icon]="this.prestamoUsuario.get('cbu')?.valid"
                       [class.red-icon]="this.prestamoUsuario.get('cbu')?.invalid && this.prestamoUsuario.get('cbu')?.touched"></i>
               </span>
-              <input type="text" formControlName="cbu" class="form-control" placeholder="Cbu">
+              <input type="text" formControlName="cbu" maxlength="28" minlength="28" class="form-control" placeholder="Cbu">
           </div>
 
           <div class="input-group input-group-lg mb-3">
@@ -81,13 +81,8 @@
               </select>
           </div>
 
-          <div class="d-grid gap-2 text-center" style="justify-content: center;">
-            <button class="learn-more" [disabled]="prestamoUsuario.invalid" type="submit">
-              <span class="circle" aria-hidden="true">
-              <span class="icon arrow"></span>
-              </span>
-              <span class="button-text">Simular</span>
-            </button>
+          <div class="d-grid gap-2 text-center" style="justify-content: center">
+            <button [disabled]="prestamoUsuario.invalid" type="submit" readonly>Simular</button>
           </div>
 
           <div class="input-group input-group-lg mt-3 mb-3">
@@ -100,15 +95,9 @@
 
         </form>
 
-        <div class="d-grid gap-2 text-center" style="justify-content: center;">
-          <button (click)="pedirPrestamo()" class="learn-more" [disabled]="prestamoUsuario.invalid" >
-            <span class="circle" aria-hidden="true">
-            <span class="icon arrow"></span>
-            </span>
-            <span class="button-text">ACEPTAR</span>
-          </button>
+        <div class="d-grid gap-2 text-center" style="justify-content: center">
+          <button (click)="pedirPrestamo()" [disabled]="prestamoUsuario.invalid" type="submit" readonly>Aceptar</button>
         </div>
-
 
       </div>
     </div>

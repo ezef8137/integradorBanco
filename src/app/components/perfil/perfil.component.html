@@ -36,15 +36,15 @@
   </div>
 </nav>
 
-<div class="wrapper">
-  <div class="card shadow-2-strong text-black" style="border-radius: 1rem; margin-left: 60px;">
+<div class="wrapperPerfil">
+  <div class="card shadow-2-strong text-black" style="border-radius: 1rem; margin-left: 60px; background-color: rgba(255, 255, 255, 0.664); align-items: center;">
     <div class="card-bievenida text-center">
       <div class="logoInicioBank">
         <img src="https://cdn-icons-png.flaticon.com/512/8176/8176383.png"
         class="img-fluid" alt="Sample image">
       </div>
 
-      <div class="text-center mb-4">
+      <div class="text-center mb-4" style="border-radius: 1rem;">
         <h1 class="display-4">Bienvenido</h1>
         <span class="titulo-letra display-4 badge rounded-pill" style="background-color: #4B79A1;">{{ this.dataUser.email }}</span>
       </div>
@@ -73,13 +73,13 @@
       </div>
     </div>
 
-    <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
-      <div  class="card-pa text-center">
+    <div class="card shadow-2-strong text-black" style="border-radius: 1rem; background-color: rgba(255, 255, 255, 0.664);">
+      <div  class="card-movimientos text-center">
         <div class="mt-2">
           <span class="h3">Ultimos Movimientos</span >
         </div>
-            <h5 style="margin-top: 30px;" *ngIf="cualqui.length == 0">No hay datos para mostrar</h5>
-            <table id="htmlData" *ngIf="cualqui.length > 0" class="table table-striped table-responsive mt-3">
+            <h5 style="margin-top: 30px;" *ngIf="mostrarTabla.length == 0">No hay datos para mostrar</h5>
+            <table id="htmlData" *ngIf="mostrarTabla.length > 0" class="table table-striped table-responsive mt-3" style="background-color: rgba(255, 255, 255, 0.664);;">
                 <thead>
                   <tr>
                     <th>Cbu Destino</th>
@@ -90,22 +90,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let cualquis of cualqui">
-                    <td>{{ cualquis.cbu }}</td>
-                    <td>{{ cualquis.monto }}</td>
-                    <td>{{ cualquis.motivo }}</td>
-                    <td>{{ cualquis.fecha }}</td>
-                    <td>{{ cualquis.horario }}</td>
+                  <tr *ngFor="let item of mostrarTabla">
+                    <td>{{ item.cbu }}</td>
+                    <td>{{ item.monto }}</td>
+                    <td>{{ item.motivo }}</td>
+                    <td>{{ item.fecha }}</td>
+                    <td>{{ item.horario }}</td>
                   </tr>
                 </tbody>
               </table>
         <div class="text-center" style="margin-bottom: 10px;">
-          <button *ngIf="cualqui.length > 0" (click)="openPDF()" readonly>Descargar PDF</button>
+          <button *ngIf="mostrarTabla.length > 0" (click)="openPDF()" readonly>Descargar PDF</button>
         </div>
       </div>
+
     </div>
   </div>
-</div>  
+</div>
 <div class="wrapper">
   <div class="body">
     <div class="container mt-0 mb-2">
@@ -113,9 +114,10 @@
           <div class="col-lg-6">
               <div class="card-GRAFICO">
                 <h1 class="display-5">GRAFICO DE GASTOS</h1>
+                <h5 style="margin-top: 30px;" *ngIf="this.datosGrafico[0].value == 0 && this.datosGrafico[1].value == 0 && this.datosGrafico[2].value == 0 && this.datosGrafico[3].value == 0">No hay datos para mostrar</h5>
                 <ngx-charts-pie-chart class="grafico"
                 [view]="view"
-                scheme="air"
+                scheme="nightLights"
                 [results]="single"
                 [gradient]="gradient"
                 [legend]="showLegend"
@@ -127,7 +129,7 @@
                 </ngx-charts-pie-chart>
               </div>
           </div>
-        
+
 </div>
 
 

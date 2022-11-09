@@ -16,7 +16,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts"
 export class PerfilComponent implements OnInit {
   @ViewChild('htmlData') htmlData!: ElementRef;
   dataUser: any;
-  cualqui: any[] = []
+  mostrarTabla: any[] = []
   users: any[] = []
   movimientos: [];
   listaUsers: any= []
@@ -26,9 +26,9 @@ export class PerfilComponent implements OnInit {
   saldoDis: any
   cbu: any
   entradaDatos: any[] = []
-  codigoExiste: boolean = false;
+  cbuExiste: boolean = false;
   loading: boolean=false
-  view: [number, number] = [800, 400];
+  view: [number, number] = [800, 500];
   datosGrafico:any[]=[]
   opcionesGrafico: any
   optSupermercado: any
@@ -36,7 +36,6 @@ export class PerfilComponent implements OnInit {
   optIndumentaria: any
   optVarios: any
   data: any
-
 
   gradient: boolean = true;
   showLegend: boolean = true;
@@ -49,9 +48,9 @@ export class PerfilComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     public _datosFirestore: DatosFirebaseService,
-    private afs: AngularFirestore) { 
+    private afs: AngularFirestore) {
      }
-    
+
 
   ngOnInit(): void {
     setTimeout(()=>{this.loading=true;}, 10000);
@@ -86,16 +85,23 @@ export class PerfilComponent implements OnInit {
 
   public openPDF(): void {
     const doc= new jsPDF();
+    const logo= new Image();
+    logo.src="https://cdn-icons-png.flaticon.com/512/8176/8176383.png"
     let DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 210;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
       const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
+      const PDF = new jsPDF('p', 'mm', 'a4');
+      PDF.addImage(logo,"PNG",10,5,15,15)
+      PDF.setFontSize(20);
+      PDF.setFont("helvetica", "bold");
+      PDF.text("BANK FELCS",80,10)
+      PDF.text("ULTIMOS MOVIMIENTOS",60,30)
       let position =40;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
       PDF.save('BankFelcs.pdf');
-      
+
     });
   }
 
@@ -105,7 +111,7 @@ export class PerfilComponent implements OnInit {
         this.optVarios = 0
         this.optIndumentaria = 0
         this.optServicios = 0
-        entrada.forEach((element: any) => { 
+        entrada.forEach((element: any) => {
           const str = element.payload.doc.data()["monto"]
           const newStr = str.slice(1)
           const newNewStr = newStr.slice(1) // variable que contiene el monto en string sin signos
@@ -141,6 +147,7 @@ export class PerfilComponent implements OnInit {
         }
 
         this.datosGrafico = [objindumentaria, objservicios, objsuper, objvarios]
+        console.log(this.datosGrafico)
 
         }
       )
@@ -149,9 +156,9 @@ export class PerfilComponent implements OnInit {
 
   getMovimientos(){
       this.afs.collection((this.uid).toString(), ref => ref.orderBy('fecha', 'desc').limit(6)).snapshotChanges().subscribe(data => {
-      this.cualqui = [];
+      this.mostrarTabla = [];
       data.forEach((element: any) => {
-        this.cualqui.push({
+        this.mostrarTabla.push({
           uid: element.payload.doc.uid,
           ...element.payload.doc.data()
         })
@@ -163,12 +170,12 @@ export class PerfilComponent implements OnInit {
     this.afs.collection("usuarios").snapshotChanges().subscribe(data => {
       data.forEach((element: any) => {
         if ((element.payload.doc.data()["cbu"]) == this.uid){
-          this.codigoExiste = true
+          this.cbuExiste = true
           this.saldoDis = (element.payload.doc.data()["dinero"])
           this.cbu = (element.payload.doc.data()["cbu"])
         }
       })
-      if (this.codigoExiste == true){
+      if (this.cbuExiste == true){
         return;
       }else{
         const objeUser = {
