@@ -20,7 +20,7 @@ export class PerfilComponent implements OnInit {
   users: any[] = []
   movimientos: [];
   listaUsers: any= []
-  objeUser:any
+  nuevoUsuario:any
   uid: any
   $:any;
   saldoDis: any
@@ -112,11 +112,11 @@ export class PerfilComponent implements OnInit {
         this.optIndumentaria = 0
         this.optServicios = 0
         entrada.forEach((element: any) => {
-          const str = element.payload.doc.data()["monto"]
-          const newStr = str.slice(1)
-          const newNewStr = newStr.slice(1) // variable que contiene el monto en string sin signos
+          const str = element.payload.doc.data()["monto"] // -$200
+          const newStr = str.slice(1) // $200
+          const newNewStr = newStr.slice(1) // 200 en string
           if ((element.payload.doc.data()["motivo"]) == "Supermercado"){
-            this.optSupermercado = parseInt(this.optSupermercado) + parseInt(newNewStr)
+            this.optSupermercado = parseInt(this.optSupermercado) + parseInt(newNewStr) // 200 + 200
           } else if ((element.payload.doc.data()["motivo"]) == "Varios"){
             this.optVarios = parseInt(this.optVarios) + parseInt(newNewStr)
           } else if ((element.payload.doc.data()["motivo"]) == "Servicios"){
@@ -147,8 +147,6 @@ export class PerfilComponent implements OnInit {
         }
 
         this.datosGrafico = [objindumentaria, objservicios, objsuper, objvarios]
-        console.log(this.datosGrafico)
-
         }
       )
   }
@@ -178,26 +176,24 @@ export class PerfilComponent implements OnInit {
       if (this.cbuExiste == true){
         return;
       }else{
-        const objeUser = {
+        const nuevoUsuario = {
           email: dataUser.email,
           dinero: 500,
           cbu: dataUser.uid
         }
 
-        const saveUser = (objeUser: any) => {
-
-          this.afs.collection("usuarios").doc(dataUser.uid).set(objeUser)
+        const guardarNuevoUsuario = (nuevoUsuario: any) => {
+          this.afs.collection("usuarios").doc(dataUser.uid).set(nuevoUsuario)
           .then(docRef =>{
-              this.saldoDis = String(objeUser.dinero)
-              this.cbu = String(objeUser.cbu)
+              this.saldoDis = String(nuevoUsuario.dinero)
+              this.cbu = String(nuevoUsuario.cbu)
           })
           .catch(error => {});
-          return objeUser;
+          return nuevoUsuario;
         }
-        saveUser(objeUser);
+        guardarNuevoUsuario(nuevoUsuario);
       }
     });
-
   }
 
   copyMessage(){
@@ -211,7 +207,7 @@ export class PerfilComponent implements OnInit {
     selBox.focus();
     selBox.select();
     this.toastr.success("El CVU se ha copiado al portapapeles","");
-    document.execCommand('copy')
+    document.execCommand('copy') // linea que copia el mensaje
     document.body.removeChild(selBox);
   }
 }

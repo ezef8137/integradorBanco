@@ -1,0 +1,29 @@
+.wrapperGrafico{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: #4B79A1;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.logoInicioBank{
+  margin: auto;
+  height: 180px;
+  width: 180px;
+}
+
+.body{
+  width: 600px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card{
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.349);
+  box-shadow: 10px 40px 15px  rgba(9, 41, 50, 0.614);
+}
